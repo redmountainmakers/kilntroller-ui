@@ -1,0 +1,27 @@
+{
+  "name": "daedalus",
+  "version": "1.0.0",
+  "description": "Kiln Controller",
+  "main": "index.html",
+  "scripts": {
+    "start": "webpack -d static/js/Index.jsx",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "directories": {
+    "lib": "static/js"
+  },
+  "dependencies": {
+    "react": "^15.0.2",
+    "react-d3": "^0.4.0",
+    "react-dom": "^15.0.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.9.0",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "react-hot-loader": "^1.3.0"
+  }
+}

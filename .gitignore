@@ -1,0 +1,5 @@
+# Compiled code
+dist
+
+# Dependency directories
+node_modules
