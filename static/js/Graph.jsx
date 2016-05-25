@@ -2,16 +2,18 @@ import React from "react";
 import rd3 from 'react-d3';
 import d3 from 'd3';
 
-
 class Graph extends React.Component {
-  getInitialState() {
-    return {data:null};
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: null
+    };
   }
 
   componentWillMount() {}
   componentDidMount() {
     d3.json('http://chip1.internal.redmountainmakers.org:3000/history', function(error, data) {
-      if (!error ) {
+      if (!error) {
         this.setState({data})
         // console.log(data);
       }
@@ -23,7 +25,10 @@ class Graph extends React.Component {
     var GraphStyle = {
       backgroundColor: this.props.backgroundColor,
       height: '100vh',
-      width: '100vh'
+      width: '100vw',
+      marinLeft:'0',
+      marginRight:'auto',
+      overflow:'auto'
     };
     if (!this.state.data) {
       return (
@@ -32,9 +37,18 @@ class Graph extends React.Component {
         </div>
       )
     } else {
+      var ActualData = {'name':'Actual Temperature','values':[]};
+      var TargetData = {'name':'Target Temperature','values':[]};
+      this.state.data.forEach(function(value) {
+        var time = new Date(value.timestamp);
+        ActualData['values'].push({'x':time,'y':value.temperature})
+        TargetData['values'].push({'x':time,'y':value.target})
+      });
+      var listData = [ActualData,TargetData];
+      console.log(listData);
       return (
         <div className="Graph" style={GraphStyle}>
-          <LineChart legend={true} data={this.state.data} width={window.innerWidth} height={window.innerHeight / 2} title="Line Chart"/>
+          <LineChart legend={true} data={listData}  xAxisFormatter={d3.time.format('%-m/%-d %-I:%M %p')} width={window.innerWidth} height={window.innerHeight / 2} title="Line Chart"/>
         </div>
       );
     }

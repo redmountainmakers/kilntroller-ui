@@ -1,6 +1,7 @@
 import React from 'react';
 import Section from './Section.jsx';
-import Graph from './Graph.jsx';
+// import Graph from './Graph.jsx';
+import Status from './Status.jsx';
 
 
 class Container extends React.Component {
@@ -10,8 +11,7 @@ class Container extends React.Component {
     };
     return (
       <div style={containerStyle} className="Container">
-        <Graph backgroundColor="white"/>
-        <Section backgroundColor="green"/>
+        <Status backgroundColor="white"/>
         <Section backgroundColor="blue"/>
         <Section backgroundColor="yellow"/>
         <Section backgroundColor="purple"/>
