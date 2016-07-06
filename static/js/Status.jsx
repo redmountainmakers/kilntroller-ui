@@ -16,20 +16,7 @@ class Status extends React.Component {
     }.bind(this));
   }
   componentDidMount() {}
-  generateRows: function() {
-    var cols = this.props.cols,  // [{key, label}]
-        data = this.props.data;
 
-    return data.map(function(item) {
-        // handle the column data within each row
-        var cells = cols.map(function(colData) {
-
-            // colData.key might be "T1"
-            return <td> {item[colData.key]} </td>;
-        });
-        return <tr key={item.id}> {cells} </tr>;
-    });
-}
   render() {
     var StatusStyle = {
       backgroundColor: this.props.backgroundColor,

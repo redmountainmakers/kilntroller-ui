@@ -1,30 +1,31 @@
-var path = require("path");
-var webpack = require("webpack");
+const path = require('path');
 
-var BUILD_DIR = path.join(__dirname, '/dist');
-var APP_DIR = path.join(__dirname, '/static/js');
+const webpack = require('webpack');
 
-var config = {
-  entry: APP_DIR + '/Index.jsx',
-  output: {
-    path: BUILD_DIR,
-    filename: 'bundle.js'
-  },
-  module: {
-    loaders: [{
-      test: /\.jsx?/,
-      include: APP_DIR,
-      loader: 'babel'
-    }]
-  },
-  resolve: {
-    modulesDirectories: ["web_modules", "node_modules", "bower_components"]
-  },
-  plugins: [
-    new webpack.ResolverPlugin(
-      new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin(".bower.json", ["main"])
-    )
-  ]
+const BUILD_DIR = path.join(__dirname, 'dist');
+const APP_DIR   = path.join(__dirname, 'static/js');
+
+module.exports = {
+    devtool : 'eval',
+    entry   : [
+        'webpack-dev-server/client?/',
+        'webpack/hot/only-dev-server',
+        path.join(APP_DIR, 'Index.jsx'),
+    ],
+    output : {
+        path       : BUILD_DIR,
+        publicPath : '/public/',
+        filename   : 'bundle.js',
+    },
+    plugins : [
+        new webpack.HotModuleReplacementPlugin()
+    ],
+    module : {
+        loaders : [{
+            test    : /\.jsx?/,
+            include : APP_DIR,
+            loaders : ['react-hot', 'babel'],
+        }]
+    },
+    debug : true,
 };
-
-module.exports = config;
