@@ -9,17 +9,12 @@
     },
     "parser" : "babel-eslint",
     "rules"  : {
-        "quotes" : [
-            2,
-            "single"
-        ],
-        "strict" : [
-            2,
-            "never"
-        ],
-        "react/jsx-uses-react"     : 2,
-        "react/jsx-uses-vars"      : 2,
-        "react/react-in-jsx-scope" : 2
+        "quotes" : [ "error", "single" ],
+        "strict" : [ "error", "never"  ],
+        "indent" : [ "error", 4 ],
+        "react/jsx-uses-react"     : "error",
+        "react/jsx-uses-vars"      : "error",
+        "react/react-in-jsx-scope" : "error"
     },
     "plugins" : [
         "react"
