@@ -6,7 +6,10 @@
         "start" : "node server.js",
         "lint"  : "eslint static/js --ext js,jsx"
     },
-    "author"       : "",
+    "contributors" : [
+        "Jay Harris <harrisjayjamall@gmail.com>",
+        "James Nylen <jnylen@gmail.com>"
+    ],
     "license"      : "MIT",
     "dependencies" : {
         "react"     : "^15.0.2",
