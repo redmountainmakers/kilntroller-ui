@@ -1,17 +1,13 @@
 {
-  "name": "daedalus",
-  "version": "1.0.0",
+  "name": "kilntroller-ui",
+  "version": "0.0.1",
   "description": "Kiln Controller",
   "main": "index.html",
   "scripts": {
-    "start": "webpack -d static/js/Index.jsx",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "webpack -d static/js/Index.jsx"
   },
   "author": "",
   "license": "MIT",
-  "directories": {
-    "lib": "static/js"
-  },
   "dependencies": {
     "react": "^15.0.2",
     "react-d3": "^0.4.0",
