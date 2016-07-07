@@ -10,7 +10,10 @@
         "Jay Harris <harrisjayjamall@gmail.com>",
         "James Nylen <jnylen@gmail.com>"
     ],
-    "license"      : "MIT",
+    "license" : "MIT",
+    "engines" : {
+        "node" : ">=6.0.0"
+    },
     "dependencies" : {
         "react"     : "15.0.2",
         "react-d3"  : "^0.4.0",
