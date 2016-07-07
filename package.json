@@ -3,8 +3,8 @@
     "version"     : "0.0.1",
     "description" : "Kiln Controller",
     "scripts"     : {
-        "start" : "node server.js",
-        "lint"  : "eslint .eslintrc.js *.js static/js --ext js,jsx"
+        "start" : "make run",
+        "lint"  : "make lint"
     },
     "contributors" : [
         "Jay Harris <harrisjayjamall@gmail.com>",
