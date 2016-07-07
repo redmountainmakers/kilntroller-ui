@@ -5,45 +5,48 @@ class Status extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            status: null
+            status : null,
         };
     }
     componentWillMount() {
-        d3.json('http://chip1.internal.redmountainmakers.org:3000/status', function(error, status) {
+        d3.json('http://chip1.internal.redmountainmakers.org:3000/status', (error, status) => {
             if (!error) {
-                this.setState({status});
+                this.setState({ status });
             }
-        }.bind(this));
+        });
     }
     componentDidMount() {}
 
     render() {
-        var StatusStyle = {
+        const StatusStyle = {
             backgroundColor : this.props.backgroundColor,
             height          : '100vh',
             width           : '100wh',
             marginLeft      : 0,
             marginRight     : 'auto',
             display         : 'flex',
-            flexDirection   : 'column'
+            flexDirection   : 'column',
         };
         if (!this.state.status) {
             return (
-                <div className="Status" style={StatusStyle}>
+                <div className="Status" style={ StatusStyle }>
                     loading...
                 </div>
-            )
+            );
         } else {
-
             return (
-                <div className="Status" style={StatusStyle}>
-                <table>
-
-                <tbody> {rowComponents} </tbody>
-                </table>
+                <div className="Status" style={ StatusStyle }>
+                    <table>
+                        <tbody />
+                    </table>
                 </div>
             );
         }
     }
 }
+
+Status.propTypes = {
+    backgroundColor : React.PropTypes.string,
+};
+
 export default Status;

@@ -18,14 +18,14 @@ module.exports = {
         filename   : 'bundle.js',
     },
     plugins : [
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
     ],
     module : {
         loaders : [{
             test    : /\.jsx?/,
             include : APP_DIR,
             loaders : ['react-hot', 'babel'],
-        }]
+        }],
     },
     debug : true,
 };

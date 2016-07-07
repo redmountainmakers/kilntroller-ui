@@ -4,7 +4,7 @@
     "description" : "Kiln Controller",
     "scripts"     : {
         "start" : "node server.js",
-        "lint"  : "eslint static/js --ext js,jsx"
+        "lint"  : "eslint .eslintrc.js *.js static/js --ext js,jsx"
     },
     "contributors" : [
         "Jay Harris <harrisjayjamall@gmail.com>",
@@ -12,9 +12,9 @@
     ],
     "license"      : "MIT",
     "dependencies" : {
-        "react"     : "^15.0.2",
+        "react"     : "15.0.2",
         "react-d3"  : "^0.4.0",
-        "react-dom" : "^15.0.2",
+        "react-dom" : "15.0.2",
         "webpack"   : "^1.13.1"
     },
     "devDependencies" : {
