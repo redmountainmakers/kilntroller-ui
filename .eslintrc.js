@@ -7,6 +7,7 @@ module.exports = {
     env : {
         browser : true,
         node    : true,
+        mocha   : true,
     },
     parser : 'babel-eslint',
     rules  : {
@@ -22,7 +23,6 @@ module.exports = {
         'no-empty-character-class' : 'error',
         'no-ex-assign'             : 'error',
         'no-extra-boolean-cast'    : 'error',
-        'no-extra-parens'          : 'error',
         'no-extra-semi'            : 'error',
         'no-func-assign'           : 'error',
         'no-invalid-regexp'        : 'error',
@@ -43,12 +43,10 @@ module.exports = {
         'array-callback-return' : 'error',
         'consistent-return'     : 'error',
         'curly'                 : ['error', 'all'],
-        'default-case'          : 'error',
         'dot-location'          : ['error', 'property'],
         'dot-notation'          : 'error',
         'eqeqeq'                : 'error',
         'no-caller'             : 'error',
-        'no-case-declarations'  : 'error',
         'no-div-regex'          : 'error',
         'no-empty-pattern'      : 'error',
         'no-eval'               : 'error',
@@ -98,7 +96,10 @@ module.exports = {
         // Variables
         'no-undef'             : 'error',
         'no-undef-init'        : 'error',
-        'no-unused-vars'       : 'error',
+        'no-unused-vars'       : ['error', {
+            varsIgnorePattern : '^mocha$',
+            argsIgnorePattern : '^props$',
+        }],
         'no-use-before-define' : 'error',
         // Style
         'array-bracket-spacing'         : ['error', 'never'],
@@ -110,7 +111,7 @@ module.exports = {
         'computed-property-spacing'     : 'error',
         'consistent-this'               : ['error', 'self'],
         'eol-last'                      : 'error',
-        'indent'                        : ['error', 4],
+        'indent'                        : ['error', 4, { SwitchCase : 1 }],
         'jsx-quotes'                    : 'error',
         'key-spacing'                   : ['error', {
             beforeColon : true,
@@ -152,7 +153,9 @@ module.exports = {
         'spaced-comment'              : 'error',
         'unicode-bom'                 : 'error',
         // ES6
-        'arrow-body-style'        : ['error', 'as-needed'],
+        'arrow-body-style'        : ['error', 'as-needed', {
+            requireReturnForObjectLiteral : true,
+        }],
         'arrow-parens'            : ['error', 'as-needed'],
         'arrow-spacing'           : 'error',
         'constructor-super'       : 'error',
@@ -172,7 +175,6 @@ module.exports = {
         'prefer-const'            : 'error',
         'prefer-rest-params'      : 'error',
         'prefer-spread'           : 'error',
-        'prefer-template'         : 'error',
         'require-yield'           : 'error',
         'rest-spread-spacing'     : 'error',
         'template-curly-spacing'  : 'error',
@@ -195,7 +197,6 @@ module.exports = {
         'react/require-extension'         : 'error',
         'react/require-render-return'     : 'error',
         'react/self-closing-comp'         : ['error', { component : true, html : true }],
-        'react/sort-prop-types'           : 'error',
         'react/wrap-multilines'           : 'error',
         // JSX
         'react/jsx-boolean-value'            : 'error',

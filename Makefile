@@ -1,5 +1,5 @@
 ESLINT      ?= node node_modules/.bin/eslint
-ESLINT_ARGS ?= .eslintrc.js *.js static/js --ext js,jsx
+ESLINT_ARGS ?= .eslintrc.js *.js app/ test/ --ext js,jsx
 
 build:
 	@echo TODO

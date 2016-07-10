@@ -3,23 +3,19 @@ const path = require('path');
 const webpack = require('webpack');
 
 const BUILD_DIR = path.join(__dirname, 'dist');
-const APP_DIR   = path.join(__dirname, 'static/js');
+const APP_DIR   = path.join(__dirname, 'app');
 
 module.exports = {
+    debug   : true,
     devtool : 'eval',
     entry   : [
         'webpack-dev-server/client?/',
         'webpack/hot/only-dev-server',
-        path.join(APP_DIR, 'Index.jsx'),
+        path.join(APP_DIR, 'index.js'),
     ],
-    output : {
-        path       : BUILD_DIR,
-        publicPath : '/public/',
-        filename   : 'bundle.js',
+    resolve : {
+        extensions : ['', '.js', '.jsx'],
     },
-    plugins : [
-        new webpack.HotModuleReplacementPlugin(),
-    ],
     module : {
         loaders : [{
             test    : /\.jsx?/,
@@ -27,5 +23,12 @@ module.exports = {
             loaders : ['react-hot', 'babel'],
         }],
     },
-    debug : true,
+    plugins : [
+        new webpack.HotModuleReplacementPlugin(),
+    ],
+    output : {
+        path       : BUILD_DIR,
+        publicPath : '/public/',
+        filename   : 'bundle.js',
+    },
 };
