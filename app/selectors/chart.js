@@ -46,6 +46,10 @@ export function getChartData(state) {
 }
 
 export function getNextChartDataRequest(state) {
+    if (state.errors.dataRequest) {
+        return null;
+    }
+
     const chartRange = state.chart.range;
     const dataRange  = getDataRange(state);
 
@@ -66,5 +70,8 @@ export function getNextChartDataRequest(state) {
 }
 
 export function isRequestingChartData(state) {
-    return state.chart.requests.pending.length > 0;
+    return (
+        state.chart.requests.pending.length > 0 &&
+        !state.errors.dataRequest
+    );
 }

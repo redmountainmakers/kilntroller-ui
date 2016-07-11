@@ -98,7 +98,7 @@ module.exports = {
         'no-undef-init'        : 'error',
         'no-unused-vars'       : ['error', {
             varsIgnorePattern : '^mocha$',
-            argsIgnorePattern : '^props$',
+            args              : 'none',
         }],
         'no-use-before-define' : 'error',
         // Style

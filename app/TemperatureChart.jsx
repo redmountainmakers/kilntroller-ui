@@ -58,7 +58,7 @@ class TemperatureChart extends React.Component {
     }
 
     render() {
-        const { loading } = this.props;
+        const { loading, readError } = this.props;
 
         const timeFormatter = d3.time.format('%-m/%-d %-I:%M %p');
 
@@ -73,7 +73,15 @@ class TemperatureChart extends React.Component {
                     width={ 1000 }
                 />
                 { loading && (
-                    <div>Loading...</div>
+                    <div>
+                        Loading...
+                    </div>
+                ) }
+                { readError && (
+                    <div>
+                        Error fetching data from API:
+                        { readError }
+                    </div>
                 ) }
             </div>
         );
@@ -81,21 +89,24 @@ class TemperatureChart extends React.Component {
 }
 
 TemperatureChart.propTypes = {
-    min     : React.PropTypes.number,
-    max     : React.PropTypes.number,
-    loading : React.PropTypes.bool,
-    data    : React.PropTypes.array,
+    min       : React.PropTypes.number,
+    max       : React.PropTypes.number,
+    loading   : React.PropTypes.bool,
+    data      : React.PropTypes.array,
+    readError : React.PropTypes.string,
 };
 
 export default connect((state, props) => {
-    const range   = state.chart.range;
-    const loading = isRequestingChartData(state);
-    const data    = getChartData(state);
+    const range     = state.chart.range;
+    const loading   = isRequestingChartData(state);
+    const data      = getChartData(state);
+    const readError = state.errors.dataRequest;
 
     return {
         min : range.min,
         max : range.max,
         loading,
         data,
+        readError,
     };
 })(TemperatureChart);
