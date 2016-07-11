@@ -14,7 +14,7 @@ function jsonRequest(method, url, settings, cb) {
         url,
         dataType : 'json',
         success  : (data, status, xhr) => {
-            if (data && data.ok) {
+            if (data && data.ok !== false) {
                 cb(null, data);
             } else if (data && data.error) {
                 cb(new Error(data.error));
@@ -38,6 +38,12 @@ export function getData(min, max, count, cb) {
     jsonRequest('GET', apiReadRoot + '/data', {
         data : { min, max, count },
     }, (err, result) => {
+        cb(err, result);
+    });
+}
+
+export function getControllerStatus(cb) {
+    jsonRequest('GET', apiWriteRoot + '/status', (err, result) => {
         cb(err, result);
     });
 }

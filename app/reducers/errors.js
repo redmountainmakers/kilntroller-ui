@@ -5,6 +5,12 @@ export default function(state = {}, action) {
                 ...state,
                 dataRequest : action.error.message,
             };
+
+        case 'CONTROLLER_STATUS_REQUEST_ERROR':
+            return {
+                ...state,
+                controllerStatus : action.error.message,
+            };
     }
 
     return state;
