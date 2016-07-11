@@ -30,6 +30,11 @@ class QueryTemperatureData extends React.Component {
     }
 }
 
+QueryTemperatureData.propTypes = {
+    nextDataRequest        : React.PropTypes.object,
+    requestTemperatureData : React.PropTypes.func,
+};
+
 export default connect(
     (state, props) => {
         const chartRange = getChartRange(state);
