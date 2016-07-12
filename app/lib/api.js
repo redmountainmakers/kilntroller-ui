@@ -1,4 +1,4 @@
-import ajax from './ajax';
+import ajax from '../../vendor/ajax';
 
 const apiReadRoot  = 'http://www.redmountainmakers.org/kiln/api';
 const apiWriteRoot = 'http://chip1.internal.redmountainmakers.org:3000';

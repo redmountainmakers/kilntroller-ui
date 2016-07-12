@@ -2,8 +2,9 @@ const path = require('path');
 
 const webpack = require('webpack');
 
-const BUILD_DIR = path.join(__dirname, 'dist');
-const APP_DIR   = path.join(__dirname, 'app');
+const BUILD_DIR  = path.join(__dirname, 'dist');
+const APP_DIR    = path.join(__dirname, 'app');
+const VENDOR_DIR = path.join(__dirname, 'vendor');
 
 module.exports = {
     debug   : true,
@@ -19,7 +20,7 @@ module.exports = {
     module : {
         loaders : [{
             test    : /\.jsx?/,
-            include : APP_DIR,
+            include : [APP_DIR, VENDOR_DIR],
             loaders : ['react-hot', 'babel'],
         }],
     },

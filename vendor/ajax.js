@@ -1,4 +1,3 @@
-/* eslint-disable */
 var type = require('type-of')
 
 var jsonpID = 0,
