@@ -10,11 +10,18 @@ import {
 } from './selectors/chart';
 
 class TemperatureChart extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.timeFormatter = d3.time.format('%-m/%-d %-I:%M %p');
+        this.formatTooltip = this.formatTooltip.bind(this);
+    }
+
     getFormattedData() {
         const { min, data } = this.props;
 
-        const actual = { name : 'Actual Temperature', values : [] };
-        const target = { name : 'Target Temperature', values : [] };
+        const actual = { name : 'Actual', values : [] };
+        const target = { name : 'Target', values : [] };
 
         if (data && data.length) {
             data.forEach(value => {
@@ -57,18 +64,24 @@ class TemperatureChart extends React.Component {
         };
     }
 
+    formatTooltip(d) {
+        return [
+            this.timeFormatter(d.xValue),
+            d.seriesName + ': ' + String(d.yValue),
+        ].join('\n');
+    }
+
     render() {
         const { loading, readError } = this.props;
-
-        const timeFormatter = d3.time.format('%-m/%-d %-I:%M %p');
 
         return (
             <div className="chart">
                 <LineChart
                     legend
                     data={ this.getFormattedData() }
-                    xAxisFormatter={ timeFormatter }
+                    xAxisFormatter={ this.timeFormatter }
                     domain={ this.getDomain() }
+                    tooltipFormat={ this.formatTooltip }
                     title="Line Chart"
                     width={ 1000 }
                 />
