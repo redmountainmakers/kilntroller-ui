@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import d3 from 'd3';
-import { LineChart } from 'rd3';
+import { LineChart } from '../vendor/rd3/src';
 
 import * as utils from './lib/utils';
 import {
