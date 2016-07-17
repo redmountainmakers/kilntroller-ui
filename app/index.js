@@ -4,8 +4,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
 
-// TODO why do I have to specify '/index' here?
-import { reducer } from './reducers/index';
+import { reducer } from './reducers';
 import App from './App';
 
 const store = createStore(
