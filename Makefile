@@ -1,8 +1,12 @@
 ESLINT      ?= node node_modules/.bin/eslint
 ESLINT_ARGS ?= .eslintrc.js *.js app/ test/ --ext js,jsx
+WEBPACK     ?= node node_modules/.bin/webpack
 
 build:
-	@echo TODO
+	@NODE_ENV=production $(WEBPACK)
+
+build-dev:
+	@$(WEBPACK)
 
 lint:
 	@$(ESLINT) $(ESLINT_ARGS)
