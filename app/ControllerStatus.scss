@@ -1,5 +1,59 @@
 .ControllerStatus {
+	$color-loading-text: #222;
+	$color-loading-background: transparentize($color-loading-text, 0.875);
+
+	$color-success-text: darken(green, 2%);
+	$color-success-background: transparentize($color-success-text, 0.875);
+
+	$color-error-text: darken(red, 20%);
+	$color-error-background: transparentize($color-error-text, 0.875);
+
+	$gridicon-size: 24px;
+	$gridicon-margin-right: 6px;
+
+	$height: 24px;
+	$height-error: 40px;
+	line-height: $height;
+
+	padding: 8px 4px;
+	clear: both;
+
+	.gridicon {
+		float: left;
+		$margin-y: ($height - $gridicon-size) / 2;
+		margin: $margin-y $gridicon-margin-right $margin-y 0;
+	}
+
+	&.loading {
+		background: $color-loading-background;
+		color: $color-loading-text;
+
+		.gridicon {
+			fill: $color-loading-text;
+		}
+	}
+
+
+	&.success {
+		background: $color-success-background;
+		color: $color-success-text;
+
+		.gridicon {
+			fill: $color-success-text;
+		}
+	}
+
 	&.error {
-		color: red;
+		background: $color-error-background;
+		color: $color-error-text;
+
+		.gridicon {
+			fill: $color-error-text;
+			$margin-y: ($height-error - $gridicon-size) / 2;
+			margin: $margin-y $gridicon-margin-right $margin-y 0;
+		}
+		.line {
+			line-height: $height-error / 2;
+		}
 	}
 }
