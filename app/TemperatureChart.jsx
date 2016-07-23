@@ -63,7 +63,7 @@ class TemperatureChart extends React.Component {
             ],
             y : [
                 Math.min(temperatureRange[0], 0),
-                Math.max(temperatureRange[1], 100),
+                Math.max(temperatureRange[1] * 1.4, 100),
             ],
         };
     }
