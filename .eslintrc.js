@@ -63,9 +63,10 @@ module.exports = {
         'no-loop-func'          : 'error',
         'no-multi-spaces'       : ['error', {
             exceptions : {
-                Property           : true,
-                VariableDeclarator : true,
-                ImportDeclaration  : true,
+                Property             : true,
+                VariableDeclarator   : true,
+                AssignmentExpression : true,
+                ImportDeclaration    : true,
             },
         }],
         'no-multi-str'                 : 'error',
