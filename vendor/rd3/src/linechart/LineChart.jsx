@@ -16,7 +16,10 @@ module.exports = React.createClass({
   displayName: 'LineChart',
 
   propTypes: {
-    circleRadius: React.PropTypes.number,
+    circleRadius: React.PropTypes.oneOfType([
+      React.PropTypes.number,
+      React.PropTypes.object,
+    ]),
     hoverAnimation: React.PropTypes.bool,
     margins: React.PropTypes.object,
     data: React.PropTypes.any, // TODO: prop types?

@@ -75,6 +75,10 @@ class TemperatureChart extends React.Component {
 
     render() {
         const { loading, readError } = this.props;
+        const circleRadius = {
+            inactive : 0,
+            active   : 4,
+        };
 
         return (
             <div className="TemperatureChart">
@@ -86,6 +90,7 @@ class TemperatureChart extends React.Component {
                     tooltipFormat={ this.formatTooltip }
                     title="Line Chart"
                     width={ 1000 }
+                    circleRadius={ circleRadius }
                 />
                 { loading && (
                     <div className="loading">

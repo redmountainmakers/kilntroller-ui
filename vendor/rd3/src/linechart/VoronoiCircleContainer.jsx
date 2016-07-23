@@ -10,7 +10,10 @@ module.exports = React.createClass({
   displayName: 'VornoiCircleContainer',
 
   propTypes: {
-    circleRadius: React.PropTypes.any,
+    circleRadius: React.PropTypes.oneOfType([
+      React.PropTypes.number,
+      React.PropTypes.object,
+    ]),
     circleFill: React.PropTypes.any,
     onMouseOver: React.PropTypes.any,
     dataPoint: React.PropTypes.any,
@@ -26,23 +29,40 @@ module.exports = React.createClass({
 
   getInitialState() {
     return {
-      circleRadius: this.props.circleRadius,
+      circleRadius: this._getCircleRadius(false),
       circleFill: this.props.circleFill,
     };
+  },
+
+  _getCircleRadius(active) {
+    const circleRadius = this.props.circleRadius;
+    if (typeof circleRadius === 'number') {
+      if (active) {
+        return circleRadius * (5 / 4);
+      } else {
+        return circleRadius;
+      }
+    } else {
+      if (active) {
+        return circleRadius.active;
+      } else {
+        return circleRadius.inactive;
+      }
+    }
   },
 
   _animateCircle() {
     const rect = findDOMNode(this).getElementsByTagName('circle')[0].getBoundingClientRect();
     this.props.onMouseOver.call(this, rect.right, rect.top, this.props.dataPoint);
     this.setState({
-      circleRadius: this.props.circleRadius * (5 / 4),
+      circleRadius: this._getCircleRadius(true),
       circleFill: shade(this.props.circleFill, 0.2),
     });
   },
 
   _restoreCircle() {
     this.setState({
-      circleRadius: this.props.circleRadius,
+      circleRadius: this._getCircleRadius(false),
       circleFill: this.props.circleFill,
     });
   },
