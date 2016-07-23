@@ -5,6 +5,8 @@ import {
     isControllerConnected,
 } from './selectors/controller';
 
+import './ControllerStatus.scss';
+
 function ControllerStatus({ requesting, isConnected, error }) {
     if (requesting) {
         return (
@@ -14,13 +16,15 @@ function ControllerStatus({ requesting, isConnected, error }) {
 
     if (isConnected) {
         return (
-            <div>Connected to controller</div>
+            <div className="ControllerStatus success">
+                Connected to controller
+            </div>
         );
     }
 
     if (error) {
         return (
-            <div>
+            <div className="ControllerStatus error">
                 <div>
                     Error connecting to controller:
                     { error }

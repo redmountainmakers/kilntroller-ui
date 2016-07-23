@@ -9,6 +9,8 @@ import {
     getChartData,
 } from './selectors/chart';
 
+import './TemperatureChart.scss';
+
 class TemperatureChart extends React.Component {
     constructor(props) {
         super(props);
@@ -75,7 +77,7 @@ class TemperatureChart extends React.Component {
         const { loading, readError } = this.props;
 
         return (
-            <div className="chart">
+            <div className="TemperatureChart">
                 <LineChart
                     legend
                     data={ this.getFormattedData() }
@@ -86,12 +88,12 @@ class TemperatureChart extends React.Component {
                     width={ 1000 }
                 />
                 { loading && (
-                    <div>
+                    <div className="loading">
                         Loading...
                     </div>
                 ) }
                 { readError && (
-                    <div>
+                    <div className="error">
                         Error fetching data from API:
                         { readError }
                     </div>
