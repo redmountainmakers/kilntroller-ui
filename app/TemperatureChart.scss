@@ -1,8 +1,28 @@
 .TemperatureChart {
-	.chart {
-		clear: both;
+	@mixin tooltip-styles() {
+		position: absolute;
+		background: #ddd;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		padding: 10px;
+		margin: -15px 10px 0 10px;
 	}
-	.loading, .error {
-		clear: both;
+
+	.rd3__tooltip {
+		position: fixed;
+		z-index: -10;
+		// top, left, display: set in jsx
+		.tip {
+			@include tooltip-styles();
+			width: 7em;
+		}
+	}
+
+	.loading {
+		@include tooltip-styles();
+		margin-left: 50%;
+		left: -9em;
+		top: 50%;
+		width: 9em;
 	}
 }

@@ -21,7 +21,7 @@ module.exports = {
       tooltip: {
         x: 0,
         y: 0,
-        child: '',
+        dangerousInnerHTML: '',
         show: false,
       },
       changeState: false,
@@ -42,7 +42,7 @@ module.exports = {
       tooltip: {
         x,
         y,
-        child: this.props.tooltipFormat.call(this, dataPoint),
+        dangerousInnerHTML: this.props.tooltipFormat.call(this, dataPoint),
         show: true,
       },
       changeState: true,
@@ -57,7 +57,7 @@ module.exports = {
       tooltip: {
         x: 0,
         y: 0,
-        child: '',
+        dangerousInnerHTML: '',
         show: false,
       },
       changeState: true,

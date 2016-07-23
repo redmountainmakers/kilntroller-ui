@@ -15,7 +15,8 @@ class TemperatureChart extends React.Component {
     constructor(props) {
         super(props);
 
-        this.timeFormatter = d3.time.format('%-m/%-d %-I:%M %p');
+        this.axisTimeFormatter = d3.time.format('%-m/%-d %-I:%M %p');
+        this.tooltipTimeFormatter = d3.time.format('%-m/%-d %-I:%M:%S %p');
         this.formatTooltip = this.formatTooltip.bind(this);
     }
 
@@ -68,9 +69,9 @@ class TemperatureChart extends React.Component {
 
     formatTooltip(d) {
         return [
-            this.timeFormatter(d.xValue),
+            this.tooltipTimeFormatter(d.xValue),
             d.seriesName + ': ' + String(d.yValue),
-        ].join('\n');
+        ].join('<br />');
     }
 
     render() {
@@ -79,22 +80,26 @@ class TemperatureChart extends React.Component {
             inactive : 0,
             active   : 4,
         };
+        if (loading) {
+            circleRadius.active = 0;
+        }
 
         return (
             <div className="TemperatureChart">
                 <LineChart
                     legend
                     data={ this.getFormattedData() }
-                    xAxisFormatter={ this.timeFormatter }
+                    xAxisFormatter={ this.axisTimeFormatter }
                     domain={ this.getDomain() }
                     tooltipFormat={ this.formatTooltip }
                     title="Line Chart"
                     width={ 1000 }
                     circleRadius={ circleRadius }
+                    showTooltip={ !loading }
                 />
                 { loading && (
                     <div className="loading">
-                        Loading...
+                        Loading chart data...
                     </div>
                 ) }
                 { readError && (
