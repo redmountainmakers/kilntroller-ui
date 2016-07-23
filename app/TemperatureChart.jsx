@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import d3 from 'd3';
-import { LineChart } from '../vendor/rd3/src';
 
+import { LineChart } from '../vendor/rd3/src';
+import Gridicon from '../vendor/gridicon';
 import * as utils from './lib/utils';
 import {
     isRequestingChartData,
@@ -86,13 +87,16 @@ class TemperatureChart extends React.Component {
 
         return (
             <div className="TemperatureChart">
+                <h1>
+                    <Gridicon icon="stats" size={ 24 }/>
+                    Temperature Chart
+                </h1>
                 <LineChart
                     legend
                     data={ this.getFormattedData() }
                     xAxisFormatter={ this.axisTimeFormatter }
                     domain={ this.getDomain() }
                     tooltipFormat={ this.formatTooltip }
-                    title="Line Chart"
                     width={ 1000 }
                     circleRadius={ circleRadius }
                     showTooltip={ !loading }

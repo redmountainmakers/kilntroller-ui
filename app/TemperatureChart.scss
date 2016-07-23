@@ -1,4 +1,19 @@
 .TemperatureChart {
+	position: relative;
+
+	h1 {
+		$gridicon-size: 24px;
+		$font-size: 20px;
+
+		font-size: $font-size;
+		.gridicon {
+			vertical-align: middle;
+			position: relative;
+			top: ($font-size - $gridicon-size) / 2;
+			margin-right: 4px;
+		}
+	}
+
 	@mixin tooltip-styles() {
 		position: absolute;
 		background: #ddd;
