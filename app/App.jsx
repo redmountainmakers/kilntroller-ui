@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Gridicon styles
+import '../vendor/gridicon/style.scss';
+
 import QueryTemperatureData  from './QueryTemperatureData';
 import TemperatureChart      from './TemperatureChart';
 import QueryControllerStatus from './QueryControllerStatus';

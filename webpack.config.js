@@ -48,7 +48,7 @@ if (process.env.NODE_ENV === 'production') {
     );
     config.module.loaders.unshift({
         test    : /\.scss$/,
-        include : [APP_DIR],
+        include : [APP_DIR, VENDOR_DIR],
         loader  : ExtractTextPlugin.extract(['css', 'sass']),
     });
 } else {
@@ -63,7 +63,7 @@ if (process.env.NODE_ENV === 'production') {
     );
     config.module.loaders.unshift({
         test    : /\.scss$/,
-        include : [APP_DIR],
+        include : [APP_DIR, VENDOR_DIR],
         loaders : ['style', 'css', 'sass'],
     });
     config.plugins.unshift(
