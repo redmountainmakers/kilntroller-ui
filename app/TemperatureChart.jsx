@@ -22,6 +22,10 @@ class TemperatureChart extends React.Component {
         this.formatTooltip = this.formatTooltip.bind(this);
     }
 
+    componentWillMount() {
+        this._isFirstLoad = true;
+    }
+
     getFormattedData() {
         const { min, data } = this.props;
 
@@ -84,14 +88,41 @@ class TemperatureChart extends React.Component {
         ].join('<br />');
     }
 
+
     render() {
-        const { loading, readError } = this.props;
+        const { data, readError } = this.props;
+        const hasData = (data && data.length);
+
+        if (hasData) {
+            this._isFirstLoad = false;
+        }
+
+        const loading = this.props.loading && this._isFirstLoad;
         const circleRadius = {
             inactive : 0,
-            active   : 4,
+            active   : (hasData ? 4 : 0),
         };
-        if (loading) {
-            circleRadius.active = 0;
+
+        let status = null;
+        if (readError) {
+            status = (
+                <div className="status">
+                    Error fetching data from API:<br />
+                    { readError }
+                </div>
+            );
+        } else if (loading) {
+            status = (
+                <div className="status">
+                    Loading chart data...
+                </div>
+            );
+        } else if (!hasData) {
+            status = (
+                <div className="status">
+                    No data for selected time period
+                </div>
+            );
         }
 
         return (
@@ -108,19 +139,9 @@ class TemperatureChart extends React.Component {
                     tooltipFormat={ this.formatTooltip }
                     width={ 1000 }
                     circleRadius={ circleRadius }
-                    showTooltip={ !loading }
+                    showTooltip={ hasData }
                 />
-                { loading && (
-                    <div className="loading">
-                        Loading chart data...
-                    </div>
-                ) }
-                { readError && (
-                    <div className="error">
-                        Error fetching data from API:
-                        { readError }
-                    </div>
-                ) }
+                { status }
             </div>
         );
     }

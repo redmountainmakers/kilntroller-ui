@@ -33,11 +33,9 @@
 		}
 	}
 
-	.loading {
+	.status {
 		@include tooltip-styles();
-		margin-left: 50%;
-		left: -9em;
-		top: 50%;
-		width: 9em;
+		right: 50%;
+		top: 90px;
 	}
 }
