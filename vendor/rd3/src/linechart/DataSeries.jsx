@@ -41,6 +41,7 @@ module.exports = React.createClass({
     const yAccessor = props.yAccessor;
 
     const interpolatePath = d3.svg.line()
+        .defined((d) => d.y !== null && typeof d.y !== 'undefined')
         .y((d) => props.yScale(yAccessor(d)))
         .interpolate(props.interpolationType);
 

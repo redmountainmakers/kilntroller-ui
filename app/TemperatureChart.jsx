@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import d3 from 'd3';
+import { omit } from 'lodash';
 
 import { LineChart } from '../vendor/rd3/src';
 import Gridicon from '../vendor/gridicon';
@@ -24,26 +25,34 @@ class TemperatureChart extends React.Component {
     getFormattedData() {
         const { min, data } = this.props;
 
-        const actual = { name : 'Actual', values : [] };
-        const target = { name : 'Target', values : [] };
+        const actual = { name : 'Actual', values : [], _missing : 0 };
+        const target = { name : 'Target', values : [], _missing : 0 };
 
         if (data && data.length) {
             data.forEach(value => {
-                const time = utils.date(value.timestamp);
+                const x = utils.date(value.timestamp);
                 if (typeof value.temperature === 'number') {
-                    actual.values.push({ x : time, y : value.temperature });
+                    actual._missing = 0;
+                    actual.values.push({ x, y : value.temperature });
+                } else if (++actual._missing === 5) {
+                    actual.values.push({ x, y : null });
                 }
                 if (typeof value.setpoint === 'number') {
-                    target.values.push({ x : time, y : value.setpoint });
+                    target._missing = 0;
+                    target.values.push({ x, y : value.setpoint });
+                } else if (++target._missing === 5) {
+                    target.values.push({ x, y : null });
                 }
             });
         } else {
             // LineChart needs at least 1 data value?
-            actual.values.push({ x : utils.date(min), y : 0 });
-            target.values.push({ x : utils.date(min), y : 0 });
+            const x = utils.date(min);
+            const y = 0;
+            actual.values.push({ x, y });
+            target.values.push({ x, y });
         }
 
-        return [actual, target];
+        return [omit(actual, '_missing'), omit(target, '_missing')];
     }
 
     getDomain() {

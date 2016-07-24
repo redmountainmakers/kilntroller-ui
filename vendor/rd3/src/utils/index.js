@@ -71,9 +71,14 @@ exports.flattenData = (data, xAccessor, yAccessor) => {
       if (isNaN(x)) {
         return;
       }
-      xValues.push(x);
 
       const y = yAccessor(item);
+      if (y === null || typeof y === 'undefined') {
+        return;
+      }
+
+      xValues.push(x);
+
       // when yAccessor returns an object (as in the case of candlestick)
       // iterate over the keys and push all the values to yValues array
       let yNode;
