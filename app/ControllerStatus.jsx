@@ -12,7 +12,7 @@ function ControllerStatus({ requesting, isConnected, error }) {
     if (requesting) {
         return (
             <div className="ControllerStatus loading">
-                <Gridicon icon="plugins" size={ 24 }/>
+                <Gridicon icon="plugins" size={ 24 } />
                 Connecting to controller...
             </div>
         );
@@ -21,7 +21,7 @@ function ControllerStatus({ requesting, isConnected, error }) {
     if (isConnected) {
         return (
             <div className="ControllerStatus success">
-                <Gridicon icon="plugins" size={ 24 }/>
+                <Gridicon icon="plugins" size={ 24 } />
                 Connected to controller
             </div>
         );
@@ -35,7 +35,7 @@ function ControllerStatus({ requesting, isConnected, error }) {
     if (error) {
         return (
             <div className="ControllerStatus error">
-                <Gridicon icon="plugins" size={ 24 }/>
+                <Gridicon icon="plugins" size={ 24 } />
                 <div className="line">
                     { errorText }
                 </div>

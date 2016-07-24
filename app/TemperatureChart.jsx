@@ -128,7 +128,7 @@ class TemperatureChart extends React.Component {
         return (
             <div className="TemperatureChart">
                 <h1>
-                    <Gridicon icon="stats" size={ 24 }/>
+                    <Gridicon icon="stats" size={ 24 } />
                     Temperature Chart
                 </h1>
                 <LineChart
