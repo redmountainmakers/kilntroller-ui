@@ -178,7 +178,7 @@ module.exports = {
         'prefer-spread'           : 'error',
         'require-yield'           : 'error',
         'rest-spread-spacing'     : 'error',
-        'template-curly-spacing'  : 'error',
+        'template-curly-spacing'  : ['error', 'always'],
         // Miscellaneous
         'strict' : ['error', 'never'],
         // React

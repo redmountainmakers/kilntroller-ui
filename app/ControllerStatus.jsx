@@ -27,17 +27,21 @@ function ControllerStatus({ requesting, isConnected, error }) {
         );
     }
 
+    let errorText = 'Read-only mode: Cannot connect to controller';
+    if (error && error !== 'Unknown error') {
+        errorText += `: ${ error }`;
+    }
+
     if (error) {
         return (
             <div className="ControllerStatus error">
                 <Gridicon icon="plugins" size={ 24 }/>
                 <div className="line">
-                    Read-only due to error:&nbsp;
-                    { error }
+                    { errorText }
                 </div>
                 <div className="line">
-                    Be sure you are connected to the RMM wifi network and the
-                    kiln controller is on.
+                    Make sure you are connected to the RMM wifi network and the
+                    kiln controller is plugged in.
                 </div>
             </div>
         );
