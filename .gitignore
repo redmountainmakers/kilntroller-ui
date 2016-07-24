@@ -1,3 +1,4 @@
-dist/
+dist/*.js
+dist/*.css
 node_modules/
 local.json
