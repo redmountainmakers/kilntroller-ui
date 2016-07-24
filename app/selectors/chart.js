@@ -1,3 +1,5 @@
+import { isEqual } from 'lodash';
+
 export function getChartRange(state) {
     return state.chart.range;
 }
@@ -45,33 +47,38 @@ export function getChartData(state) {
     ));
 }
 
+export function isRequestingChartData(state) {
+    return (
+        state.chart.requests.pending.length > 0 &&
+        !state.errors.dataRequest
+    );
+}
+
 export function getNextChartDataRequest(state) {
     if (state.errors.dataRequest) {
+        return null;
+    }
+    if (isRequestingChartData(state)) {
         return null;
     }
 
     const chartRange = state.chart.range;
     const dataRange  = getDataRange(state);
 
-    if (chartRange.min > dataRange.max || chartRange.max < dataRange.min) {
-        return {
-            count : 500,
+    if (chartRange.min < dataRange.min || chartRange.max > dataRange.max) {
+        const request = {
+            count : 100,
             ...chartRange,
         };
-    } else if (chartRange.max > dataRange.max) {
-        // ...
-        return null;
-    } else if (chartRange.min < dataRange.min) {
-        // ...
-        return null;
-    } else {
-        return null;
-    }
-}
 
-export function isRequestingChartData(state) {
-    return (
-        state.chart.requests.pending.length > 0 &&
-        !state.errors.dataRequest
-    );
+        const completed = state.chart.requests.completed;
+        for (let i = completed.length - 1; i >= completed.length - 5 && i >= 0; i--) {
+            if (isEqual(completed[i], request)) {
+                return null;
+            }
+        }
+        return request;
+    }
+
+    return null;
 }

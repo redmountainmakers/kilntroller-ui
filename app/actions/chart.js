@@ -3,8 +3,8 @@ import * as api from '../lib/api';
 export function requestTemperatureData(dataRequest) {
     return dispatch => {
         dispatch({
-            type : 'DATA_REQUEST',
-            ...dataRequest,
+            type      : 'DATA_REQUEST',
+            requested : dataRequest,
         });
 
         const { min, max, count } = dataRequest;
@@ -17,7 +17,7 @@ export function requestTemperatureData(dataRequest) {
             } else {
                 dispatch({
                     type : 'DATA_RECEIVE',
-                    data : result.data,
+                    ...result,
                 });
             }
         });

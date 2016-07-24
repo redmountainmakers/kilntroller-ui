@@ -6,7 +6,7 @@ export function range(state = {}, action) {
     if (!state.min || !state.max) {
         const now = moment.utc();
         return {
-            min : +now.clone().subtract(2, 'days'),
+            min : +now.clone().subtract(8, 'hours'),
             max : +now,
         };
     }
@@ -72,6 +72,9 @@ export function requests(state = {}, action) {
         };
     }
 
+    if (!action.requested) {
+        return state;
+    }
     const request = pick(action.requested, 'min', 'max', 'count');
 
     switch (action.type) {
@@ -82,15 +85,8 @@ export function requests(state = {}, action) {
             };
 
         case 'DATA_RECEIVE':
-            const pending = state.pending.slice();
-            for (let i = pending.length - 1; i >= 0; i--) {
-                if (isEqual(request, pending[i])) {
-                    pending.splice(i, 1);
-                    break;
-                }
-            }
             return {
-                pending,
+                pending   : state.pending.filter(r => !isEqual(request, r)),
                 completed : state.completed.concat([request]),
             };
     }
