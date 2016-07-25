@@ -1,4 +1,4 @@
-dist/*.js
-dist/*.css
+dist/bundle.js
+dist/style.css
 node_modules/
 local.json
