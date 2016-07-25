@@ -8,7 +8,6 @@ import {
     receiveScheduleUpdate,
 } from './actions/updates';
 import { apiUpdatePath } from './lib/api';
-import './lib/sockjs-patch';
 
 class QueryStatusUpdates extends React.Component {
     componentDidMount() {
