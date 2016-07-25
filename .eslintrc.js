@@ -130,7 +130,6 @@ module.exports = {
         'no-new-object'                 : 'error',
         'no-spaced-func'                : 'error',
         'no-trailing-spaces'            : 'error',
-        'no-underscore-dangle'          : 'error',
         'no-unneeded-ternary'           : 'error',
         'no-whitespace-before-property' : 'error',
         'object-curly-spacing'          : ['error', 'always'],

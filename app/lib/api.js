@@ -1,7 +1,9 @@
 import ajax from '../../vendor/ajax';
 
-const apiReadRoot  = 'http://www.redmountainmakers.org/kiln/api';
-const apiWriteRoot = 'http://chip1.internal.redmountainmakers.org:3000';
+export const apiReadRoot  = 'http://www.redmountainmakers.org/kiln/api';
+export const apiWriteRoot = 'http://chip1.internal.redmountainmakers.org:3000';
+
+export const apiUpdatePath = apiReadRoot + '/sockjs';
 
 function jsonRequest(method, url, settings, cb) {
     if (typeof settings === 'function') {
