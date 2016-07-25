@@ -24,7 +24,7 @@ class KilnStatus extends React.Component {
 		const { status } = this.props;
 		if (!status || !status.timestamp) {
 			return (
-				<div class="error">
+				<div className="error">
 					Kiln status unknown
 				</div>
 			);
@@ -43,7 +43,7 @@ class KilnStatus extends React.Component {
 		const temp3      = getTemperature('T3');
 
 		return (
-			<div class="status">
+			<div className="status">
 				<div>{ date.toString() }</div>
 				<div>Relays: { relaysOn ? 'ON' : 'OFF' }</div>
 				<div>Temperature: { tempActual }</div>
@@ -59,5 +59,5 @@ KilnStatus.propTypes = {
 export default connect((state, props) => {
 	return {
 		status : state.updates.status,
-	}
+	};
 })(KilnStatus);
