@@ -2,44 +2,44 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import {
-    getNextChartDataRequest,
+	getNextChartDataRequest,
 } from './selectors/chart';
 import {
-    requestTemperatureData,
+	requestTemperatureData,
 } from './actions/chart';
 
 class QueryTemperatureData extends React.Component {
-    componentWillMount() {
-        this.maybeRequestData(this.props);
-    }
+	componentWillMount() {
+		this.maybeRequestData(this.props);
+	}
 
-    componentWillReceiveProps(nextProps) {
-        this.maybeRequestData(nextProps);
-    }
+	componentWillReceiveProps(nextProps) {
+		this.maybeRequestData(nextProps);
+	}
 
-    maybeRequestData(props) {
-        if (props.nextDataRequest) {
-            props.requestTemperatureData(props.nextDataRequest);
-        }
-    }
+	maybeRequestData(props) {
+		if (props.nextDataRequest) {
+			props.requestTemperatureData(props.nextDataRequest);
+		}
+	}
 
-    render() {
-        return null;
-    }
+	render() {
+		return null;
+	}
 }
 
 QueryTemperatureData.propTypes = {
-    nextDataRequest        : React.PropTypes.object,
-    requestTemperatureData : React.PropTypes.func,
+	nextDataRequest        : React.PropTypes.object,
+	requestTemperatureData : React.PropTypes.func,
 };
 
 export default connect(
-    (state, props) => {
-        const nextDataRequest = getNextChartDataRequest(state);
+	(state, props) => {
+		const nextDataRequest = getNextChartDataRequest(state);
 
-        return {
-            nextDataRequest,
-        };
-    },
-    { requestTemperatureData }
+		return {
+			nextDataRequest,
+		};
+	},
+	{ requestTemperatureData }
 )(QueryTemperatureData);

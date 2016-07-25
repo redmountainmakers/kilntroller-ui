@@ -12,14 +12,14 @@ import QueryControllerStatus from './QueryControllerStatus';
 import ControllerStatus      from './ControllerStatus';
 
 export default function App() {
-    return (
-        <div>
-            <QueryStatusUpdates />
-            <KilnStatus />
-            <QueryTemperatureData />
-            <TemperatureChart />
-            <QueryControllerStatus />
-            <ControllerStatus />
-        </div>
-    );
+	return (
+		<div>
+			<QueryStatusUpdates />
+			<KilnStatus />
+			<QueryTemperatureData />
+			<TemperatureChart />
+			<QueryControllerStatus />
+			<ControllerStatus />
+		</div>
+	);
 }

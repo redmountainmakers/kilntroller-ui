@@ -6,8 +6,8 @@ import errors     from './errors';
 import updates    from './updates';
 
 export const reducer = combineReducers({
-    chart,
-    controller,
-    errors,
-    updates,
+	chart,
+	controller,
+	errors,
+	updates,
 });

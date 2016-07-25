@@ -1,10 +1,10 @@
 const defaultConfig = {
-    port : 3000,
+	port : 3000,
 };
 
 let localConfig = {};
 try {
-    localConfig = require('./local.json');
+	localConfig = require('./local.json');
 } catch (err) {}
 
 localConfig = Object.assign({}, defaultConfig, localConfig);

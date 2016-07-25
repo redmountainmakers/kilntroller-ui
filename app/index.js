@@ -16,9 +16,9 @@ const store = createStore(
 );
 
 render(
-    React.createElement(
+	React.createElement(
 		Provider, { store },
 		React.createElement(App)
-    ),
-    document.getElementById('app')
+	),
+	document.getElementById('app')
 );
