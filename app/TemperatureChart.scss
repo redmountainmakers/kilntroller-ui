@@ -33,6 +33,26 @@
 		}
 	}
 
+	.rd3-legend-chart {
+		.container {
+			display: block;
+			position: relative;
+			width: 100%;
+			height: 100%;
+		}
+		.chart {
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+		.legend {
+			position: absolute;
+			top: 0;
+			right: 0;
+			z-index: -10;
+		}
+	}
+
 	.status {
 		@include tooltip-styles();
 		right: 50%;
