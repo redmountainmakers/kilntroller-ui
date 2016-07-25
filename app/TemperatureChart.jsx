@@ -134,6 +134,7 @@ class TemperatureChart extends React.Component {
                 <LineChart
                     legend
                     data={ this.getFormattedData() }
+                    colors={ d3.scale.category10() }
                     xAxisFormatter={ this.axisTimeFormatter }
                     domain={ this.getDomain() }
                     tooltipFormat={ this.formatTooltip }
