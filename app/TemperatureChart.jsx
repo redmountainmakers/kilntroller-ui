@@ -91,7 +91,7 @@ class TemperatureChart extends React.Component {
 
     render() {
         const { data, readError } = this.props;
-        const hasData = (data && data.length);
+        const hasData = Boolean(data && data.length);
 
         if (hasData) {
             this._isFirstLoad = false;
