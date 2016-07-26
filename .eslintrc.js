@@ -124,7 +124,15 @@ module.exports = {
 		'max-len'                       : ['warn', 100],
 		'max-statements-per-line'       : 'error',
 		'new-cap'                       : 'error',
-		'no-mixed-operators'            : 'error',
+		'no-mixed-operators'            : ['error', {
+			groups : [
+				['+', '-', '%'],
+				['*', '/', '**', '%'],
+				['&&', '||', '&', '|', '^', '~', '<<', '>>', '>>>'],
+				['in', 'instanceof', '==', '!=', '===', '!==', '>', '>=', '<', '<='],
+			],
+			allowSamePrecedence : true,
+		}],
 		'no-mixed-spaces-and-tabs'      : 'error',
 		'no-nested-ternary'             : 'error',
 		'no-new-object'                 : 'error',
