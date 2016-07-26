@@ -1,5 +1,5 @@
 .SectionHeader {
-    margin: 12px 8px 8px;
+    margin: 12px 8px 4px;
 
 	$gridicon-size: 24px;
 	$font-size: 20px;
@@ -11,5 +11,12 @@
 		position: relative;
 		top: ($font-size - $gridicon-size) / 2;
 		margin-right: 4px;
+	}
+
+	small {
+		font-weight: normal;
+		font-size: 75%;
+		margin-left: 0.7em;
+		color: #777;
 	}
 }

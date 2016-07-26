@@ -1,2 +1,34 @@
+@import '_vars';
+
 .KilnStatus {
+	$gridicon-size: 24px;
+	line-height: $gridicon-size;
+
+	.gridicon {
+		vertical-align: middle;
+		position: relative;
+		top: -1px;
+		margin-right: 4px;
+	}
+
+	.relays {
+		&.off {
+			color: $color-success-text;
+		}
+		&.on {
+			color: darken(red, 10%);
+		}
+	}
+
+	.sensors {
+		color: #777;
+		font-size: 90%;
+		margin-left: 1em;
+	}
+
+	.error {
+		.relays, .temperatures, .sensors {
+			color: lighten(desaturate(red, 80%), 20%);
+		}
+	}
 }

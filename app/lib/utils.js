@@ -1,5 +1,6 @@
 import d3 from 'd3';
 import moment from 'moment';
+import numeral from 'numeral';
 
 export function date(timestamp, local = true) {
 	const date = moment.utc(timestamp);
@@ -11,9 +12,8 @@ export function date(timestamp, local = true) {
 	}
 }
 
-export function round(n, places = 2) {
-	const scale = Math.pow(10, places);
-	return Math.round(n * scale) / scale;
+export function round(n, places = 1) {
+	return numeral(n).format('0,0.' + Array(places + 1).join('0'));
 }
 
 export const timeFormatters = {
