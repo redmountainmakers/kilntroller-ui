@@ -10,7 +10,7 @@ chai.use(dirtyChai);
 describe('chart.range reducer', () => {
 	it('should set a default range', () => {
 		const now   = moment.utc();
-		const prev  = moment.utc().subtract(2, 'days');
+		const prev  = moment.utc().subtract(8, 'hours');
 		const state = chart.range(undefined, {});
 		expect(Math.abs(now - state.max)).to.be.below(2);
 		expect(Math.abs(prev - state.min)).to.be.below(2);
