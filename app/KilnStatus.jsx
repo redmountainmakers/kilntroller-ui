@@ -56,7 +56,8 @@ class KilnStatus extends React.Component {
 			}
 
 			const bodyClass   = outdatedStatus ? 'error' : 'status';
-			const relaysClass = relaysOn ? 'relays on' : 'relays off';
+			const relaysClass = (relaysOn ? 'on' : 'off');
+			const targetClass = (tempTarget ? 'set' : 'not-set');
 
 			body = (
 				<SectionBody className={ bodyClass }>
@@ -65,21 +66,21 @@ class KilnStatus extends React.Component {
 							{ outdatedStatus }
 						</div>
 					) }
-					<div className={ relaysClass }>
+					<div className={ 'relays ' + relaysClass }>
 						<Gridicon
 							icon={ relaysOn ? 'circle' : 'circle-outline' }
 							size={ 24 }
 						/>
 						Heating elements are { relaysOn ? 'ON' : 'OFF' }
 					</div>
-					<div className="temperatures">
+					<div className="temperatures actual">
 						<Gridicon icon="info-outline" size={ 24 } />
 						Temperature: { tempActual }
 						<span className="sensors">
 							( individual sensors: { temp1 } / { temp2 } / { temp3 } )
 						</span>
 					</div>
-					<div className="temperatures">
+					<div className={ 'temperatures target ' + targetClass }>
 						<Gridicon icon="indent-left" size={ 24 } />
 						{ tempTarget
 							? `Target temperature: ${ tempTarget }`

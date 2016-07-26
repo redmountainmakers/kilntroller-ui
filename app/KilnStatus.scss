@@ -20,6 +20,12 @@
 		}
 	}
 
+	.temperatures.target {
+		&.set {
+			color: darken(red, 25%);
+		}
+	}
+
 	.sensors {
 		color: #777;
 		font-size: 90%;
