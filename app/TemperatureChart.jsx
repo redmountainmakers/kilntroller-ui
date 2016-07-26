@@ -4,7 +4,7 @@ import d3 from 'd3';
 import { omit } from 'lodash';
 
 import { LineChart } from '../vendor/rd3/src';
-import Gridicon from '../vendor/gridicon';
+import SectionHeader from './SectionHeader';
 import * as utils from './lib/utils';
 import {
 	isRequestingChartData,
@@ -127,10 +127,9 @@ class TemperatureChart extends React.Component {
 
 		return (
 			<div className="TemperatureChart">
-				<h1>
-					<Gridicon icon="stats" size={ 24 } />
+				<SectionHeader icon="stats">
 					Temperature Chart
-				</h1>
+				</SectionHeader>
 				<LineChart
 					legend
 					data={ this.getFormattedData() }

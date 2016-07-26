@@ -1,8 +1,8 @@
 import React from 'react';
 
-import './App.scss';
-// Gridicon styles
 import '../vendor/gridicon/style.scss';
+import '../vendor/reset.scss';
+import './App.scss';
 
 import QueryStatusUpdates    from './QueryStatusUpdates';
 import KilnStatus            from './KilnStatus';

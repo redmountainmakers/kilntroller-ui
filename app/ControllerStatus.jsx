@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Gridicon from '../vendor/gridicon';
+import SectionBody from './SectionBody';
 import {
 	isControllerConnected,
 } from './selectors/controller';
@@ -11,19 +12,19 @@ import './ControllerStatus.scss';
 function ControllerStatus({ requesting, isConnected, error }) {
 	if (requesting) {
 		return (
-			<div className="ControllerStatus loading">
+			<SectionBody className="ControllerStatus loading">
 				<Gridicon icon="plugins" size={ 24 } />
 				Connecting to controller...
-			</div>
+			</SectionBody>
 		);
 	}
 
 	if (isConnected) {
 		return (
-			<div className="ControllerStatus success">
+			<SectionBody className="ControllerStatus success">
 				<Gridicon icon="plugins" size={ 24 } />
 				Connected to controller
-			</div>
+			</SectionBody>
 		);
 	}
 
@@ -34,7 +35,7 @@ function ControllerStatus({ requesting, isConnected, error }) {
 
 	if (error) {
 		return (
-			<div className="ControllerStatus error">
+			<SectionBody className="ControllerStatus error">
 				<Gridicon icon="plugins" size={ 24 } />
 				<div className="line">
 					{ errorText }
@@ -43,7 +44,7 @@ function ControllerStatus({ requesting, isConnected, error }) {
 					Make sure you are connected to the RMM wifi network and the
 					kiln controller is plugged in.
 				</div>
-			</div>
+			</SectionBody>
 		);
 	}
 

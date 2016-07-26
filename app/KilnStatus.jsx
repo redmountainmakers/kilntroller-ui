@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { get } from 'lodash';
 
-import Gridicon from '../vendor/gridicon';
+import SectionHeader from './SectionHeader';
+import SectionBody from './SectionBody';
 import * as utils from './lib/utils';
 
 import './KilnStatus.scss';
@@ -11,22 +12,21 @@ class KilnStatus extends React.Component {
 	render() {
 		return (
 			<div className="KilnStatus">
-				<h1>
-					<Gridicon icon="info-outline" size={ 24 } />
+				<SectionHeader icon="info-outline">
 					Kiln Status
-				</h1>
-				{ this.renderStatusOrError() }
+				</SectionHeader>
+				{ this.renderBody() }
 			</div>
 		);
 	}
 
-	renderStatusOrError() {
+	renderBody() {
 		const { status } = this.props;
 		if (!status || !status.timestamp) {
 			return (
-				<div className="error">
+				<SectionBody className="error">
 					Kiln status unknown
-				</div>
+				</SectionBody>
 			);
 		}
 
@@ -43,11 +43,11 @@ class KilnStatus extends React.Component {
 		const temp3      = getTemperature('T3');
 
 		return (
-			<div className="status">
+			<SectionBody className="status">
 				<div>{ date.toString() }</div>
 				<div>Relays: { relaysOn ? 'ON' : 'OFF' }</div>
 				<div>Temperature: { tempActual }</div>
-			</div>
+			</SectionBody>
 		);
 	}
 }

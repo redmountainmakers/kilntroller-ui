@@ -1,12 +1,3 @@
-h1 {
-	$gridicon-size: 24px;
-	$font-size: 20px;
-
-	font-size: $font-size;
-	.gridicon {
-		vertical-align: middle;
-		position: relative;
-		top: ($font-size - $gridicon-size) / 2;
-		margin-right: 4px;
-	}
+h1, h2, h3, h4, h5, h6 {
+	font-weight: bold;
 }

@@ -70,6 +70,7 @@ module.exports = React.createClass({
       marginBottom: 0,
       marginTop: topMargin,
       listStylePosition: 'inside',
+      listStyleType: 'disc',
     };
 
     return (
