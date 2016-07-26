@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import SockJS from 'sockjs-client';
-import { forOwn, omit } from 'lodash';
+import { forOwn } from 'lodash';
 import {
 	setCorrectingInterval,
 	clearCorrectingInterval,
@@ -9,8 +9,8 @@ import {
 import debugModule from 'debug';
 
 import {
-	receiveStatusUpdate,
-	receiveScheduleUpdate,
+	requestKilnStatus,
+	receiveUpdate,
 	sendDummyUpdate,
 } from './actions/updates';
 import { apiUpdatePath } from './lib/api';
@@ -37,6 +37,8 @@ class QueryStatusUpdates extends React.Component {
 				}
 			} catch (err) {}
 		};
+
+		this.props.requestKilnStatus();
 	}
 
 	componentWillUnmount() {
@@ -54,22 +56,11 @@ class QueryStatusUpdates extends React.Component {
 				debug('send', +new Date, u);
 				condensedUpdates[u.type] = u;
 			});
-			forOwn(condensedUpdates, u => this._sendUpdate(u));
+			forOwn(condensedUpdates, u => this.props.receiveUpdate(u));
 		} else if (++this._cyclesWithoutUpdate >= 10) {
 			if (this._cyclesWithoutUpdate <= 50 || this._cyclesWithoutUpdate % 15 === 0) {
 				this.props.sendDummyUpdate();
 			}
-		}
-	}
-
-	_sendUpdate(update) {
-		switch (update.type) {
-			case 'update':
-				this.props.receiveStatusUpdate(omit(update, 'type'));
-				break;
-			case 'schedule':
-				this.props.receiveScheduleUpdate(omit(update, 'type'));
-				break;
 		}
 	}
 
@@ -79,16 +70,16 @@ class QueryStatusUpdates extends React.Component {
 }
 
 QueryStatusUpdates.propTypes = {
-	receiveStatusUpdate   : React.PropTypes.func,
-	receiveScheduleUpdate : React.PropTypes.func,
-	sendDummyUpdate       : React.PropTypes.func,
+	requestKilnStatus : React.PropTypes.func,
+	receiveUpdate     : React.PropTypes.func,
+	sendDummyUpdate   : React.PropTypes.func,
 };
 
 export default connect(
 	null,
 	{
-		receiveStatusUpdate,
-		receiveScheduleUpdate,
+		requestKilnStatus,
+		receiveUpdate,
 		sendDummyUpdate,
 	}
 )(QueryStatusUpdates);

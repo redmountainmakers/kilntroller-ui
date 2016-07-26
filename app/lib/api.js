@@ -44,6 +44,12 @@ export function getData(min, max, count, cb) {
 	});
 }
 
+export function getKilnStatus(cb) {
+	jsonRequest('GET', apiReadRoot + '/status', (err, result) => {
+		cb(err, result);
+	});
+}
+
 export function getControllerStatus(cb) {
 	jsonRequest('GET', apiWriteRoot + '/status', (err, result) => {
 		cb(err, result);
