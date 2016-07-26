@@ -31,7 +31,8 @@ export class UpdateNormalizer {
 	}
 
 	queue(update) {
-		this.updates.push(update);
+		const i = this.bisector(this.updates, this.accessor(update));
+		this.updates.splice(i, 0, update);
 	}
 
 	getCurrentUpdates() {

@@ -28,4 +28,35 @@ describe('UpdateNormalizer', () => {
 			}
 		}
 	});
+
+	it('should add updates in sorted order', () => {
+		const normalizer = new utils.UpdateNormalizer(1000);
+		normalizer.queue(1200);
+		normalizer.queue(800);
+		normalizer.queue(600);
+		expect(normalizer.updates).to.eql([600, 800, 1200]);
+		expect(normalizer.getCurrentUpdates()).to.eql([]);
+		expect(normalizer.updates).to.eql([600, 800, 1200]);
+		expect(normalizer.getCurrentUpdates()).to.eql([600, 800]);
+		expect(normalizer.updates).to.eql([1200]);
+		expect(normalizer.getCurrentUpdates()).to.eql([1200]);
+		expect(normalizer.updates).to.eql([]);
+		expect(normalizer.getCurrentUpdates()).to.eql([]);
+	});
+
+	it('should not fail if gaps are added between updates', () => {
+		const normalizer = new utils.UpdateNormalizer(1000);
+		normalizer.queue(2200);
+		normalizer.queue(600);
+		expect(normalizer.updates).to.eql([600, 2200]);
+		expect(normalizer.getCurrentUpdates()).to.eql([]);
+		expect(normalizer.updates).to.eql([600, 2200]);
+		expect(normalizer.getCurrentUpdates()).to.eql([600]);
+		expect(normalizer.updates).to.eql([2200]);
+		expect(normalizer.getCurrentUpdates()).to.eql([]);
+		expect(normalizer.updates).to.eql([2200]);
+		expect(normalizer.getCurrentUpdates()).to.eql([2200]);
+		expect(normalizer.updates).to.eql([]);
+		expect(normalizer.getCurrentUpdates()).to.eql([]);
+	});
 });
