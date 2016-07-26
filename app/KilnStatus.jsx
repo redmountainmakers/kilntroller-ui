@@ -44,7 +44,7 @@ class KilnStatus extends React.Component {
 
 		return (
 			<SectionBody className="status">
-				<div>{ date.toString() }</div>
+				<div>{ utils.timeFormatters.second(date) }</div>
 				<div>Relays: { relaysOn ? 'ON' : 'OFF' }</div>
 				<div>Temperature: { tempActual }</div>
 			</SectionBody>

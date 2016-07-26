@@ -17,8 +17,6 @@ class TemperatureChart extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.axisTimeFormatter = d3.time.format('%-m/%-d %-I:%M %p');
-		this.tooltipTimeFormatter = d3.time.format('%-m/%-d %-I:%M:%S %p');
 		this.formatTooltip = this.formatTooltip.bind(this);
 	}
 
@@ -83,7 +81,7 @@ class TemperatureChart extends React.Component {
 
 	formatTooltip(d) {
 		return [
-			this.tooltipTimeFormatter(d.xValue),
+			utils.timeFormatters.second(d.xValue),
 			d.seriesName + ': ' + String(d.yValue),
 		].join('<br />');
 	}
@@ -134,7 +132,7 @@ class TemperatureChart extends React.Component {
 					legend
 					data={ this.getFormattedData() }
 					colors={ d3.scale.category10() }
-					xAxisFormatter={ this.axisTimeFormatter }
+					xAxisFormatter={ utils.timeFormatters.minute }
 					domain={ this.getDomain() }
 					tooltipFormat={ this.formatTooltip }
 					width={ 1000 }
