@@ -11,3 +11,9 @@ export function receiveScheduleUpdate(update) {
 		schedule : update,
 	};
 }
+
+export function sendDummyUpdate(update) {
+	return {
+		type : 'DUMMY_UPDATE',
+	};
+}

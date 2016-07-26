@@ -4,6 +4,9 @@ export function status(state = {}, action) {
 	switch (action.type) {
 		case 'STATUS_UPDATE_RECEIVE':
 			return action.status;
+
+		case 'DUMMY_UPDATE':
+			return { ...state };
 	}
 
 	return state;
