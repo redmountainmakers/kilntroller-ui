@@ -24,7 +24,10 @@ class KilnStatus extends React.Component {
 
 		if (status && status.timestamp) {
 			function getTemperature(key, addDegrees = true) {
-				const value = get(status, ['computed', key], 0);
+				if (!Array.isArray(key)) {
+					key = ['computed', key];
+				}
+				const value = get(status, key, 0);
 				if (value) {
 					return utils.round(value) + (addDegrees ? ' °C' : '');
 				} else {
@@ -34,7 +37,7 @@ class KilnStatus extends React.Component {
 
 			const date       = utils.date(status.timestamp);
 			const relaysOn   = Boolean(get(status, ['raw', 'R'], false));
-			const tempTarget = getTemperature('setpoint');
+			const tempTarget = getTemperature(['setpoint']);
 			const tempActual = getTemperature('temperature');
 			const temp1      = getTemperature('T1', false);
 			const temp2      = getTemperature('T2', false);
