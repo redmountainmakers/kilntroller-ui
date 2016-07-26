@@ -68,13 +68,7 @@ class QueryStatusUpdates extends React.Component {
 				this.props.receiveStatusUpdate(omit(update, 'type'));
 				break;
 			case 'schedule':
-				// Schedule updates have a 'now' property but the rest of the
-				// code expects this to be 'timestamp' instead
-				const timestamp = update.schedule.now;
-				this.props.receiveScheduleUpdate({
-					timestamp,
-					...omit(update, 'now'),
-				});
+				this.props.receiveScheduleUpdate(omit(update, 'type'));
 				break;
 		}
 	}
