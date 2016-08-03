@@ -1,12 +1,12 @@
 $body-color: #222;
 
 $color-loading-text: $body-color;
-$color-loading-background: transparentize($color-loading-text, 0.875);
+$color-loading-background: mix(white, $color-loading-text, 87.5%);
 
 $color-success-text: darken(green, 2%);
-$color-success-background: transparentize($color-success-text, 0.875);
+$color-success-background: mix(white, $color-success-text, 87.5%);
 
 $color-error-text: darken(red, 20%);
-$color-error-background: transparentize($color-error-text, 0.875);
+$color-error-background: mix(white, $color-error-text, 87.5%);
 
 $color-tooltip-background: $color-loading-background;
