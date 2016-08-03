@@ -77,7 +77,7 @@ class KilnStatus extends React.Component {
 						<Gridicon icon="info-outline" size={ 24 } />
 						Temperature: { tempActual }
 						<span className="sensors">
-							( individual sensors: { temp1 } / { temp2 } / { temp3 } )
+							individual sensors: { temp1 } / { temp2 } / { temp3 }
 						</span>
 					</div>
 					<div className={ 'temperatures target ' + targetClass }>
@@ -112,8 +112,7 @@ class KilnStatus extends React.Component {
 		return (
 			<div className="KilnStatus">
 				<SectionHeader icon="cog">
-					Kiln Status
-					{ headerDate }
+					Kiln Status { headerDate }
 				</SectionHeader>
 				{ body }
 			</div>

@@ -2,13 +2,14 @@
 
 .KilnStatus {
 	$gridicon-size: 24px;
+	$gridicon-margin-right: 4px;
 	line-height: $gridicon-size;
 
 	.gridicon {
 		vertical-align: middle;
 		position: relative;
 		top: -1px;
-		margin-right: 4px;
+		margin-right: $gridicon-margin-right;
 	}
 
 	.relays {
@@ -28,11 +29,21 @@
 
 	.sensors {
 		color: #777;
-		font-size: 90%;
+		font-size: 85%;
 		margin-left: 1em;
+		@media(max-width: 480px) {
+			display: block;
+			margin-top: -5px;
+			margin-left: $gridicon-size + $gridicon-margin-right;
+			font-size: 80%;
+		}
 	}
 
 	.error {
+		.outdated {
+			margin-left: 4px;
+			margin-bottom: 4px;
+		}
 		.relays, .temperatures, .sensors {
 			color: lighten(desaturate(red, 80%), 20%);
 		}
