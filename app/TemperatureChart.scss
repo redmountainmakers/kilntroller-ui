@@ -1,10 +1,12 @@
+@import '_vars';
+
 .TemperatureChart {
 	position: relative;
 
 	@mixin tooltip-styles() {
 		position: absolute;
-		background: #ddd;
-		border: 1px solid #ddd;
+		background: $color-tooltip-background;
+		border: 1px solid $color-tooltip-background;
 		border-radius: 4px;
 		padding: 10px;
 		margin: -15px 10px 0 10px;
