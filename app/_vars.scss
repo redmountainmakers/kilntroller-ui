@@ -1,4 +1,6 @@
-$color-loading-text: #222;
+$body-color: #222;
+
+$color-loading-text: $body-color;
 $color-loading-background: transparentize($color-loading-text, 0.875);
 
 $color-success-text: darken(green, 2%);

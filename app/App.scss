@@ -1,3 +1,26 @@
+@import '_vars';
+
+// System font stack and other related stuff from:
+// https://github.com/Automattic/wp-calypso/blob/12a27be/assets/stylesheets/shared/_typography.scss
+
+body {
+	color: $body-color;
+	font-family:
+		-apple-system,
+		BlinkMacSystemFont,
+		"Segoe UI",
+		"Roboto",
+		"Oxygen-Sans",
+		"Ubuntu",
+		"Cantarell",
+		"Helvetica Neue",
+		sans-serif;
+	font-size: 15px;
+	font-weight: 400;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
 h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
 }
