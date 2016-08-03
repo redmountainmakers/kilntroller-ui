@@ -8,6 +8,7 @@ new WebpackDevServer(webpack(webpackConfig), {
 	publicPath         : webpackConfig.output.publicPath,
 	hot                : true,
 	historyApiFallback : true,
+	stats              : { chunkModules : false },
 }).listen(config.port, err => {
 	if (err) {
 		throw err;

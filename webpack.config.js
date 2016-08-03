@@ -36,6 +36,9 @@ const config = {
 		}),
 		new webpack.IgnorePlugin(/\.\/locale$/, /moment$/),
 	],
+	stats : {
+		children : false,
+	},
 };
 
 if (process.env.NODE_ENV === 'production') {
