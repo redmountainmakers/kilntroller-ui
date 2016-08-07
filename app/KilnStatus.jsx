@@ -45,7 +45,7 @@ class KilnStatus extends React.Component {
 
 			let outdatedStatus = null;
 
-			const now = moment();
+			const now = moment.utc(this.props.time);
 			const diff = now.diff(date, 'seconds');
 			if (diff > 10) {
 				if (diff < 45) {
@@ -124,11 +124,13 @@ class KilnStatus extends React.Component {
 }
 
 KilnStatus.propTypes = {
+	time   : React.PropTypes.number,
 	status : React.PropTypes.object,
 };
 
 export default connect((state, props) => {
 	return {
+		time   : state.time,
 		status : state.updates.status,
 	};
 })(KilnStatus);

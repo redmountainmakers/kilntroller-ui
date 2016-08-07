@@ -27,12 +27,6 @@ export function receiveUpdate(update) {
 	return null;
 }
 
-export function sendDummyUpdate(update) {
-	return {
-		type : 'DUMMY_UPDATE',
-	};
-}
-
 export function requestKilnStatus() {
 	return dispatch => {
 		dispatch({

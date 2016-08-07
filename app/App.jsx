@@ -4,6 +4,7 @@ import '../vendor/gridicon/style.scss';
 import '../vendor/reset.scss';
 import './App.scss';
 
+import Ticker                from './Ticker';
 import QueryStatusUpdates    from './QueryStatusUpdates';
 import KilnStatus            from './KilnStatus';
 import QueryTemperatureData  from './QueryTemperatureData';
@@ -14,6 +15,7 @@ import ControllerStatus      from './ControllerStatus';
 export default function App() {
 	return (
 		<div>
+			<Ticker />
 			<QueryStatusUpdates />
 			<KilnStatus />
 			<QueryTemperatureData />
