@@ -28,9 +28,14 @@ class QueryStatusUpdates extends React.Component {
 		this._sock.onmessage = e => {
 			try {
 				const update = JSON.parse(e.data);
-				if (update && update.type) {
-					debug('receive', update);
-					this._updates.queue(update);
+				debug('receive', update);
+				switch (update && update.type) {
+					case 'schedule':
+						this.props.receiveUpdate(update);
+						break;
+					case 'update':
+						this._updates.queue(update);
+						break;
 				}
 			} catch (err) {}
 		};
