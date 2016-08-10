@@ -44,7 +44,10 @@
 
 	.status {
 		@include tooltip-styles();
-		right: 50%;
-		top: 90px;
+		$status-width: 220px;
+		width: $status-width;
+		margin-left: -$status-width / 2;
+		left: 50%;
+		top: 100px;
 	}
 }
