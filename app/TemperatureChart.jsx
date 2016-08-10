@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import d3 from 'd3';
-import { omit } from 'lodash';
+import { get, omit } from 'lodash';
+import debugModule from 'debug';
 
 import { LineChart } from '../vendor/rd3/src';
 import SectionHeader from './SectionHeader';
@@ -13,11 +14,24 @@ import {
 
 import './TemperatureChart.scss';
 
+const debug = debugModule('TemperatureChart');
+
 class TemperatureChart extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.formatTooltip = this.formatTooltip.bind(this);
+	}
+
+	shouldComponentUpdate(nextProps) {
+		const { data, min, max, loading, readError } = this.props;
+		return (
+			min !== nextProps.min ||
+			max !== nextProps.max ||
+			loading !== nextProps.loading ||
+			readError !== nextProps.readError ||
+			get(data, 'length', 0) !== get(nextProps.data, 'length', 0)
+		);
 	}
 
 	componentWillMount() {
@@ -31,6 +45,7 @@ class TemperatureChart extends React.Component {
 		const target = { name : 'Target', values : [], _missing : 0 };
 
 		if (data && data.length) {
+			debug('getFormattedData length=%d', data.length);
 			data.forEach(value => {
 				const x = utils.date(value.timestamp);
 				if (typeof value.temperature === 'number') {
