@@ -148,6 +148,16 @@ class TemperatureChart extends React.Component {
 			);
 		}
 
+		const { windowWidth } = this.state;
+		const pixelsPerTickLabel = 115;
+		const tickCount = Math.max(
+			2,
+			Math.min(
+				Math.floor(windowWidth / pixelsPerTickLabel) - 3,
+				10
+			)
+		);
+
 		return (
 			<div className="TemperatureChart">
 				<SectionHeader icon="stats">
@@ -158,9 +168,10 @@ class TemperatureChart extends React.Component {
 					data={ this.getFormattedData() }
 					colors={ d3.scale.category10() }
 					xAxisFormatter={ utils.timeFormatters.minute }
+					xAxisTickCount={ tickCount }
 					domain={ this.getDomain() }
 					tooltipFormat={ this.formatTooltip }
-					width={ this.state.windowWidth }
+					width={ windowWidth }
 					circleRadius={ circleRadius }
 					showTooltip={ hasData }
 				/>
