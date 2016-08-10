@@ -2,19 +2,22 @@ import { combineReducers } from 'redux';
 import { isEqual, pick } from 'lodash';
 import moment from 'moment';
 
+export function getLatestRange() {
+	const now = moment.utc();
+	return {
+		min : +now.clone().subtract(8, 'hours'),
+		max : +now,
+	};
+}
+
 export function range(state = {}, action) {
 	if (!state.min || !state.max) {
-		const now = moment.utc();
-		return {
-			min : +now.clone().subtract(8, 'hours'),
-			max : +now,
-		};
+		return getLatestRange();
 	}
 
 	switch (action.type) {
-		case 'ADVANCE_OR_WHATEVER':
-			// ...
-			return state;
+		case 'ADVANCE_CHART_RANGE':
+			return getLatestRange();
 
 		case 'USER_ZOOM':
 			if (action.min && action.max) {
@@ -67,8 +70,9 @@ export function data(state = [], action) {
 export function requests(state = {}, action) {
 	if (!state.pending || !state.completed) {
 		return {
-			pending   : [],
-			completed : [],
+			pending      : [],
+			completed    : [],
+			maxTimestamp : 0,
 		};
 	}
 
@@ -80,14 +84,16 @@ export function requests(state = {}, action) {
 	switch (action.type) {
 		case 'DATA_REQUEST':
 			return {
-				pending   : state.pending.concat([request]),
-				completed : state.completed,
+				pending      : state.pending.concat([request]),
+				completed    : state.completed,
+				maxTimestamp : state.maxTimestamp,
 			};
 
 		case 'DATA_RECEIVE':
 			return {
-				pending   : state.pending.filter(r => !isEqual(request, r)),
-				completed : state.completed.concat([request]),
+				pending      : state.pending.filter(r => !isEqual(request, r)),
+				completed    : state.completed.concat([request]),
+				maxTimestamp : Math.max(state.maxTimestamp, request.max),
 			};
 	}
 
