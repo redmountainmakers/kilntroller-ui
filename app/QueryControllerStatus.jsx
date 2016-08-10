@@ -6,6 +6,7 @@ import {
 } from './actions/controller';
 import {
 	isControllerConnected,
+	getControllerLastTimestamp,
 } from './selectors/controller';
 
 class QueryControllerStatus extends React.Component {
@@ -35,11 +36,19 @@ QueryControllerStatus.propTypes = {
 
 export default connect(
 	(state, props) => {
-		const isConnected = isControllerConnected(state);
-		const hasError    = !!state.errors.controllerStatus;
+		const isConnected       = isControllerConnected(state);
+		const hasError          = !!state.errors.controllerStatus;
+		const requesting        = state.controller.requesting;
+		const currentTimestamp  = state.time;
+		const receivedTimestamp = getControllerLastTimestamp(state);
+
+		const shouldRequestStatus = (
+			(!isConnected && !hasError && !requesting) ||
+			(currentTimestamp > receivedTimestamp + 10000)
+		);
 
 		return {
-			shouldRequestStatus : !isConnected && !hasError,
+			shouldRequestStatus,
 		};
 	},
 	{ requestControllerStatus }

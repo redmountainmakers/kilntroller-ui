@@ -1,12 +1,28 @@
 import { combineReducers } from 'redux';
 
-export function status(state = {}, action) {
+export function status(state = null, action) {
 	switch (action.type) {
 		case 'CONTROLLER_STATUS_RECEIVE':
-			return action.status;
+			return {
+				status    : action.status,
+				timestamp : +new Date,
+			};
+
+		case 'CONTROLLER_STATUS_REQUEST_ERROR':
+			return {
+				status    : false,
+				timestamp : +new Date,
+			};
 	}
 
-	return state;
+	if (state) {
+		return state;
+	} else {
+		return {
+			status    : null,
+			timestamp : 0,
+		};
+	}
 }
 
 export function requesting(state = false, action) {
