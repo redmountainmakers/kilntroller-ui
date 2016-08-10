@@ -22,7 +22,7 @@ class TemperatureChart extends React.Component {
 
 		this.formatTooltip = this.formatTooltip.bind(this);
 		this.state = {
-			windowWidth: window.innerWidth
+			windowWidth : window.innerWidth,
 		};
 		this._resize = debounce(this._resize.bind(this), 500);
 	}
@@ -182,7 +182,7 @@ class TemperatureChart extends React.Component {
 
 	_resize() {
 		this.setState({
-			windowWidth : window.innerWidth
+			windowWidth : window.innerWidth,
 		});
 	}
 }

@@ -26,6 +26,6 @@ export function requestTemperatureData(dataRequest) {
 
 export function advanceChartRange() {
 	return {
-		type : 'ADVANCE_CHART_RANGE'
+		type : 'ADVANCE_CHART_RANGE',
 	};
 }
