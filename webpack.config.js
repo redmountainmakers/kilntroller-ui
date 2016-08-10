@@ -47,7 +47,11 @@ if (process.env.NODE_ENV === 'production') {
 		new webpack.optimize.UglifyJsPlugin({
 			compress : { warnings : false },
 		}),
-		new ExtractTextPlugin('style.css')
+		new ExtractTextPlugin('style.css'),
+		new webpack.NormalModuleReplacementPlugin(
+			/^debug$/,
+			path.join(__dirname, 'app', 'lib', 'debug-noop')
+		)
 	);
 	config.module.loaders.unshift({
 		test    : /\.scss$/,
