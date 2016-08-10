@@ -44,6 +44,7 @@ module.exports = {
         y,
         dangerousInnerHTML: this.props.tooltipFormat.call(this, dataPoint),
         show: true,
+        parentWidth: this.props.width,
       },
       changeState: true,
     });
@@ -59,6 +60,7 @@ module.exports = {
         y: 0,
         dangerousInnerHTML: '',
         show: false,
+        parentWidth: this.props.width,
       },
       changeState: true,
     });
