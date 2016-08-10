@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import d3 from 'd3';
-import { get, omit } from 'lodash';
+import { debounce, get, omit } from 'lodash';
 import debugModule from 'debug';
 
 import { LineChart } from '../vendor/rd3/src';
@@ -21,21 +21,32 @@ class TemperatureChart extends React.Component {
 		super(props);
 
 		this.formatTooltip = this.formatTooltip.bind(this);
+		this.state = {
+			windowWidth: window.innerWidth
+		};
+		this._resize = debounce(this._resize.bind(this), 500);
 	}
 
-	shouldComponentUpdate(nextProps) {
+	shouldComponentUpdate(nextProps, nextState) {
 		const { data, min, max, loading, readError } = this.props;
+		const { windowWidth } = this.state;
 		return (
 			min !== nextProps.min ||
 			max !== nextProps.max ||
 			loading !== nextProps.loading ||
 			readError !== nextProps.readError ||
-			get(data, 'length', 0) !== get(nextProps.data, 'length', 0)
+			get(data, 'length', 0) !== get(nextProps.data, 'length', 0) ||
+			windowWidth !== nextState.windowWidth
 		);
 	}
 
 	componentWillMount() {
 		this._isFirstLoad = true;
+		window.addEventListener('resize', this._resize);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('resize', this._resize);
 	}
 
 	getFormattedData() {
@@ -101,7 +112,6 @@ class TemperatureChart extends React.Component {
 		].join('<br />');
 	}
 
-
 	render() {
 		const { data, readError } = this.props;
 		const hasData = Boolean(data && data.length);
@@ -150,13 +160,19 @@ class TemperatureChart extends React.Component {
 					xAxisFormatter={ utils.timeFormatters.minute }
 					domain={ this.getDomain() }
 					tooltipFormat={ this.formatTooltip }
-					width={ 1000 }
+					width={ this.state.windowWidth }
 					circleRadius={ circleRadius }
 					showTooltip={ hasData }
 				/>
 				{ status }
 			</div>
 		);
+	}
+
+	_resize() {
+		this.setState({
+			windowWidth : window.innerWidth
+		});
 	}
 }
 
