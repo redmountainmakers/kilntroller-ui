@@ -1,25 +1,25 @@
 .ControllerStatus {
-	$height: 24px;
-	$height-error: 40px;
-	line-height: $height;
-
+	position: relative;
 	$gridicon-size: 24px;
-	$gridicon-margin-left: -3px;
-	$gridicon-margin-right: 6px;
 
 	.gridicon {
-		float: left;
-		$margin-y: ($height - $gridicon-size) / 2;
-		margin: $margin-y $gridicon-margin-right $margin-y $gridicon-margin-left;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
 	}
 
-	&.error {
-		.gridicon {
-			$margin-y: ($height-error - $gridicon-size) / 2;
-			margin: $margin-y $gridicon-margin-right $margin-y $gridicon-margin-left;
+	.content {
+		padding-left: $gridicon-size + 6px;
+		margin: 4px 0;
+	}
+
+	.line {
+		margin: 8px 0;
+		&:first-child {
+			margin-top: 0;
 		}
-		.line {
-			line-height: $height-error / 2;
+		&:last-child {
+			margin-bottom: 0;
 		}
 	}
 }

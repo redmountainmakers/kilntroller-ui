@@ -14,7 +14,9 @@ function ControllerStatus({ requesting, isConnected, error }) {
 		return (
 			<SectionBody className="ControllerStatus loading">
 				<Gridicon icon="plugins" size={ 24 } />
-				Connecting to controller...
+				<div className="content">
+					Connecting to controller...
+				</div>
 			</SectionBody>
 		);
 	}
@@ -23,7 +25,9 @@ function ControllerStatus({ requesting, isConnected, error }) {
 		return (
 			<SectionBody className="ControllerStatus success">
 				<Gridicon icon="plugins" size={ 24 } />
-				Connected to controller
+				<div className="content">
+					Connected to controller
+				</div>
 			</SectionBody>
 		);
 	}
@@ -37,12 +41,14 @@ function ControllerStatus({ requesting, isConnected, error }) {
 		return (
 			<SectionBody className="ControllerStatus error">
 				<Gridicon icon="plugins" size={ 24 } />
-				<div className="line">
-					{ errorText }
-				</div>
-				<div className="line">
-					Make sure you are connected to the RMM wifi network and the
-					kiln controller is plugged in.
+				<div className="content">
+					<div className="line">
+						{ errorText }
+					</div>
+					<div className="line">
+						Make sure you are connected to the RMM wifi network and
+						the kiln controller is plugged in.
+					</div>
 				</div>
 			</SectionBody>
 		);
