@@ -4,13 +4,13 @@ export function status(state = null, action) {
 	switch (action.type) {
 		case 'CONTROLLER_STATUS_RECEIVE':
 			return {
-				status    : action.status,
+				data      : action.data,
 				timestamp : +new Date,
 			};
 
 		case 'CONTROLLER_STATUS_REQUEST_ERROR':
 			return {
-				status    : false,
+				data      : false,
 				timestamp : +new Date,
 			};
 	}
@@ -19,7 +19,7 @@ export function status(state = null, action) {
 		return state;
 	} else {
 		return {
-			status    : null,
+			data      : null,
 			timestamp : 0,
 		};
 	}

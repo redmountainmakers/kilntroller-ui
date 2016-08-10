@@ -1,7 +1,7 @@
 export function isControllerConnected(state) {
 	return (
-		state.controller.status &&
-		state.controller.status.timestamp > 0
+		state.controller.status.data &&
+		state.controller.status.data.timestamp > 0
 	);
 }
 

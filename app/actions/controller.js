@@ -14,8 +14,8 @@ export function requestControllerStatus() {
 				});
 			} else {
 				dispatch({
-					type   : 'CONTROLLER_STATUS_RECEIVE',
-					status : result,
+					type : 'CONTROLLER_STATUS_RECEIVE',
+					data : result,
 				});
 			}
 		});
