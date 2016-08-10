@@ -38,30 +38,7 @@ export function data(state = [], action) {
 			if (!Array.isArray(action.data) || !action.data.length) {
 				return state;
 			}
-			const data = state.slice();
-			const newData = action.data;
-			if (!data.length) {
-				return newData;
-			}
-			let j = 0;
-			for (let i = 0; i < data.length; i++) {
-				while (j < newData.length && newData[j].timestamp < data[i].timestamp) {
-					data.splice(i, 0, newData[j]);
-					i++;
-					j++;
-				}
-				if (j === newData.length) {
-					break;
-				}
-				if (newData[j].timestamp === data[i].timestamp) {
-					data[i] = newData[j];
-					j++;
-				}
-			}
-			if (j < newData.length) {
-				return data.concat(newData.slice(j));
-			}
-			return data;
+			return action.data;
 	}
 
 	return state;
