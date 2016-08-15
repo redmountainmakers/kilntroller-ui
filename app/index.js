@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
+import { AppContainer } from 'react-hot-loader';
 
 import { reducer } from './reducers';
 import App from './App';
@@ -17,8 +18,30 @@ const store = createStore(
 
 render(
 	React.createElement(
-		Provider, { store },
-		React.createElement(App)
+		AppContainer,
+		null,
+		React.createElement(
+			Provider,
+			{ store },
+			React.createElement(App)
+		)
 	),
 	document.getElementById('app')
 );
+
+if (module.hot) {
+	module.hot.accept('./App', () => {
+		render(
+			React.createElement(
+				AppContainer,
+				null,
+				React.createElement(
+					Provider,
+					{ store },
+					React.createElement(require('./App').default)
+				)
+			),
+			document.getElementById('app')
+		);
+	});
+}

@@ -44,6 +44,10 @@ const config = {
 if (process.env.NODE_ENV === 'production') {
 	// UglifyJs: http://stackoverflow.com/a/35462011
 	config.plugins.unshift(
+		new webpack.LoaderOptionsPlugin({
+			minimize : true,
+			debug    : false,
+		}),
 		new webpack.optimize.UglifyJsPlugin({
 			compress : { warnings : false },
 		}),
@@ -59,14 +63,11 @@ if (process.env.NODE_ENV === 'production') {
 		loader  : ExtractTextPlugin.extract(['css', 'sass']),
 	});
 } else {
-	config.debug   = true;
 	config.devtool = 'eval';
 	config.entry.unshift(
+		'react-hot-loader/patch',
 		'webpack-dev-server/client?/',
 		'webpack/hot/only-dev-server'
-	);
-	config.module.loaders[0].loaders.unshift(
-		'react-hot'
 	);
 	config.module.loaders.unshift({
 		test    : /\.scss$/,
@@ -74,6 +75,10 @@ if (process.env.NODE_ENV === 'production') {
 		loaders : ['style', 'css', 'sass'],
 	});
 	config.plugins.unshift(
+		new webpack.LoaderOptionsPlugin({
+			minimize : false,
+			debug    : true,
+		}),
 		new webpack.HotModuleReplacementPlugin()
 	);
 }
