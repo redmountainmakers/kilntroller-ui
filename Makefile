@@ -18,6 +18,6 @@ run:
 	@node server.js
 
 test:
-	@node node_modules/.bin/mocha
+	@NODE_ENV=test node node_modules/.bin/mocha
 
 .PHONY: build build-dev lint lint-fix run test
