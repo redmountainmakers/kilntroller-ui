@@ -1,29 +1,39 @@
-const d3 = require('d3');
+import { extent } from 'd3-array';
+import { scaleLinear, scaleTime } from 'd3-scale';
+import {
+  timeSecond,
+  timeMinute,
+  timeHour,
+  timeDay,
+  timeWeek,
+  timeMonth,
+  timeYear,
+} from 'd3-time';
 
 exports.calculateScales = (width, height, xValues, yValues, xDomain = [], yDomain = []) => {
   let xScale;
   if (xValues.length > 0 && Object.prototype.toString.call(xValues[0]) === '[object Date]') {
-    xScale = d3.time.scale()
+    xScale = scaleTime()
       .range([0, width]);
   } else {
-    xScale = d3.scale.linear()
+    xScale = scaleLinear()
       .range([0, width]);
   }
-  const xdomain = d3.extent(xValues);
+  const xdomain = extent(xValues);
   if (xDomain[0] !== undefined && xDomain[0] !== null) xdomain[0] = xDomain[0];
   if (xDomain[1] !== undefined && xDomain[1] !== null) xdomain[1] = xDomain[1];
   xScale.domain(xdomain);
 
   let yScale;
   if (yValues.length > 0 && Object.prototype.toString.call(yValues[0]) === '[object Date]') {
-    yScale = d3.time.scale()
+    yScale = scaleTime()
       .range([height, 0]);
   } else {
-    yScale = d3.scale.linear()
+    yScale = scaleLinear()
       .range([height, 0]);
   }
 
-  const ydomain = d3.extent(yValues);
+  const ydomain = extent(yValues);
   if (yDomain[0] !== undefined && yDomain[0] !== null) ydomain[0] = yDomain[0];
   if (yDomain[1] !== undefined && yDomain[1] !== null) ydomain[1] = yDomain[1];
   yScale.domain(ydomain);
@@ -152,4 +162,14 @@ exports.shade = (hex, percent) => {
   blue = min(255, round((1 + percent) * B)).toString(16);
   if (blue.length === 1) blue = `0${blue}`;
   return `#${red}${green}${blue}`;
+};
+
+exports.timeIntervals = {
+  second : timeSecond,
+  minute : timeMinute,
+  hour   : timeHour,
+  day    : timeDay,
+  week   : timeWeek,
+  month  : timeMonth,
+  year   : timeYear,
 };

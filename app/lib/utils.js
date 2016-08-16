@@ -1,4 +1,5 @@
-import d3 from 'd3';
+import { timeFormat } from 'd3-time-format';
+import { bisector } from 'd3-array';
 import moment from 'moment';
 import numeral from 'numeral';
 
@@ -17,8 +18,8 @@ export function round(n, places = 1) {
 }
 
 export const timeFormatters = {
-	minute : d3.time.format('%-m/%-d %-I:%M %p'),
-	second : d3.time.format('%-m/%-d %-I:%M:%S %p'),
+	minute : timeFormat('%-m/%-d %-I:%M %p'),
+	second : timeFormat('%-m/%-d %-I:%M:%S %p'),
 };
 
 export class UpdateNormalizer {
@@ -27,7 +28,7 @@ export class UpdateNormalizer {
 		this.sentUntil = 0;
 		this.frequency = frequency;
 		this.accessor  = accessor;
-		this.bisector  = d3.bisector(this.accessor).left;
+		this.bisector  = bisector(this.accessor).left;
 	}
 
 	queue(update) {

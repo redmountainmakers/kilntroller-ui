@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import d3 from 'd3';
+import { extent } from 'd3-array';
+import { scaleOrdinal, schemeCategory10 } from 'd3-scale';
 import { debounce, get, omit } from 'lodash';
 import debugModule from 'debug';
 
@@ -88,7 +89,7 @@ class TemperatureChart extends React.Component {
 
 		let temperatureRange;
 		if (data && data.length) {
-			temperatureRange = d3.extent(data, point => point.temperature);
+			temperatureRange = extent(data, point => point.temperature);
 		} else {
 			temperatureRange = [Infinity, -Infinity];
 		}
@@ -166,7 +167,7 @@ class TemperatureChart extends React.Component {
 				<LineChart
 					legend
 					data={ this.getFormattedData() }
-					colors={ d3.scale.category10() }
+					colors={ scaleOrdinal(schemeCategory10) }
 					xAxisFormatter={ utils.timeFormatters.minute }
 					xAxisTickCount={ tickCount }
 					domain={ this.getDomain() }

@@ -1,7 +1,9 @@
 'use strict';
 
+import { voronoi } from 'd3-voronoi';
+import { line } from 'd3-shape';
+
 const React = require('react');
-const d3 = require('d3');
 const VoronoiCircleContainer = require('./VoronoiCircleContainer');
 const Line = require('./Line');
 
@@ -40,7 +42,7 @@ module.exports = React.createClass({
     const xAccessor = props.xAccessor;
     const yAccessor = props.yAccessor;
 
-    const interpolatePath = d3.svg.line()
+    const interpolatePath = line()
         .defined((d) => d.y !== null && typeof d.y !== 'undefined')
         .y((d) => props.yScale(yAccessor(d)))
         .interpolate(props.interpolationType);
@@ -63,7 +65,7 @@ module.exports = React.createClass({
       )
     );
 
-    const voronoi = d3.geom.voronoi()
+    const voronoiGenerator = voronoi()
       .x(d => xScale(d.coord.x))
       .y(d => yScale(d.coord.y))
       .clipExtent([[0, 0], [props.width, props.height]]);
@@ -71,7 +73,7 @@ module.exports = React.createClass({
     let cx;
     let cy;
     let circleFill;
-    const regions = voronoi(props.value).map((vnode, idx) => {
+    const regions = voronoiGenerator(props.value).map((vnode, idx) => {
       const point = vnode.point.coord;
       if (Object.prototype.toString.call(xAccessor(point)) === '[object Date]') {
         cx = props.xScale(xAccessor(point).getTime());

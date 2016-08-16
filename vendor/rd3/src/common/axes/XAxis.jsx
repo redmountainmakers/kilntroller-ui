@@ -1,10 +1,10 @@
 'use strict';
 
 const React = require('react');
-const d3 = require('d3');
 const AxisTicks = require('./AxisTicks');
 const AxisLine = require('./AxisLine');
 const Label = require('./Label');
+const utils = require('../../utils');
 
 module.exports = React.createClass({
 
@@ -57,7 +57,7 @@ module.exports = React.createClass({
     }
 
     if (typeof props.xAxisTickInterval !== 'undefined') {
-      tickArguments = [d3.time[props.xAxisTickInterval.unit], props.xAxisTickInterval.interval];
+      tickArguments = [utils.timeIntervals[props.xAxisTickInterval.unit], props.xAxisTickInterval.interval];
     }
 
     return (

@@ -1,9 +1,9 @@
 'use strict';
 
-const React = require('react');
-const d3 = require('d3');
-const Polygon = require('./Polygon');
+import { voronoi } from 'd3-voronoi';
 
+const React = require('react');
+const Polygon = require('./Polygon');
 
 module.exports = React.createClass({
 
@@ -23,12 +23,12 @@ module.exports = React.createClass({
     const xScale = this.props.xScale;
     const yScale = this.props.yScale;
 
-    const voronoi = d3.geom.voronoi()
+    const voronoiGenerator = voronoi()
       .x(d => xScale(d.coord.x))
       .y(d => yScale(d.coord.y))
       .clipExtent([[0, 0], [this.props.width, this.props.height]]);
 
-    const regions = voronoi(this.props.data).map((vnode, idx) => (
+    const regions = voronoiGenerator(this.props.data).map((vnode, idx) => (
       <Polygon structure={this.props.structure} key={idx} id={vnode.point.id} vnode={vnode} />
     ));
 

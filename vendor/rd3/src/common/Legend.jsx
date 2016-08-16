@@ -1,7 +1,8 @@
 'use strict';
 
+import { scaleOrdinal, schemeCategory20c } from 'd3-scale';
+
 const React = require('react');
-const d3 = require('d3');
 
 module.exports = React.createClass({
 
@@ -21,7 +22,7 @@ module.exports = React.createClass({
   getDefaultProps() {
     return {
       className: 'rd3-legend',
-      colors: d3.scale.category20c(),
+      colors: scaleOrdinal(schemeCategory20c),
       colorAccessor: (d, idx) => idx,
       itemClassName: 'rd3-legend-item',
       text: '#000',

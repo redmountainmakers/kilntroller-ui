@@ -1,7 +1,8 @@
 'use strict';
 
+import { scaleOrdinal, schemeCategory20c } from 'd3-scale';
+
 const React = require('react');
-const d3 = require('d3');
 
 module.exports = {
 
@@ -47,7 +48,7 @@ module.exports = {
   getDefaultProps() {
     return {
       axesColor: '#000',
-      colors: d3.scale.category20c(),
+      colors: scaleOrdinal(schemeCategory20c),
       colorAccessor: (d, idx) => idx,
       height: 200,
       horizontal: false,
