@@ -26,10 +26,10 @@ module.exports = React.createClass({
     const voronoiGenerator = voronoi()
       .x(d => xScale(d.coord.x))
       .y(d => yScale(d.coord.y))
-      .clipExtent([[0, 0], [this.props.width, this.props.height]]);
+      .extent([[0, 0], [this.props.width, this.props.height]]);
 
-    const regions = voronoiGenerator(this.props.data).map((vnode, idx) => (
-      <Polygon structure={this.props.structure} key={idx} id={vnode.point.id} vnode={vnode} />
+    const regions = voronoiGenerator(this.props.data).polygons().map((vnode, idx) => (
+      <Polygon structure={this.props.structure} key={idx} id={vnode.data.id} vnode={vnode} />
     ));
 
     return (

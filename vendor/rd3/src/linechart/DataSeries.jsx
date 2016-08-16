@@ -1,7 +1,7 @@
 'use strict';
 
 import { voronoi } from 'd3-voronoi';
-import { line } from 'd3-shape';
+import { line, curveLinear } from 'd3-shape';
 
 const React = require('react');
 const VoronoiCircleContainer = require('./VoronoiCircleContainer');
@@ -15,7 +15,7 @@ module.exports = React.createClass({
     color: React.PropTypes.func,
     colorAccessor: React.PropTypes.func,
     data: React.PropTypes.array,
-    interpolationType: React.PropTypes.string,
+    interpolationCurve: React.PropTypes.func,
     xAccessor: React.PropTypes.func,
     yAccessor: React.PropTypes.func,
     hoverAnimation: React.PropTypes.bool,
@@ -26,7 +26,7 @@ module.exports = React.createClass({
       data: [],
       xAccessor: (d) => d.x,
       yAccessor: (d) => d.y,
-      interpolationType: 'linear',
+      interpolationCurve: curveLinear,
       hoverAnimation: false,
     };
   },
@@ -45,7 +45,7 @@ module.exports = React.createClass({
     const interpolatePath = line()
         .defined((d) => d.y !== null && typeof d.y !== 'undefined')
         .y((d) => props.yScale(yAccessor(d)))
-        .interpolate(props.interpolationType);
+        .curve(props.interpolationCurve);
 
     if (this._isDate(props.data[0].values[0], xAccessor)) {
       interpolatePath.x(d => props.xScale(props.xAccessor(d).getTime()));
@@ -68,13 +68,13 @@ module.exports = React.createClass({
     const voronoiGenerator = voronoi()
       .x(d => xScale(d.coord.x))
       .y(d => yScale(d.coord.y))
-      .clipExtent([[0, 0], [props.width, props.height]]);
+      .extent([[0, 0], [props.width, props.height]]);
 
     let cx;
     let cy;
     let circleFill;
-    const regions = voronoiGenerator(props.value).map((vnode, idx) => {
-      const point = vnode.point.coord;
+    const regions = voronoiGenerator(props.value).polygons().map((vnode, idx) => {
+      const point = vnode.data.coord;
       if (Object.prototype.toString.call(xAccessor(point)) === '[object Date]') {
         cx = props.xScale(xAccessor(point).getTime());
       } else {
@@ -85,7 +85,7 @@ module.exports = React.createClass({
       } else {
         cy = props.yScale(yAccessor(point));
       }
-      circleFill = props.colors(props.colorAccessor(vnode, vnode.point.seriesIndex));
+      circleFill = props.colors(props.colorAccessor(vnode, vnode.data.seriesIndex));
 
       return (
         <VoronoiCircleContainer
@@ -99,7 +99,7 @@ module.exports = React.createClass({
           dataPoint={{
             xValue: xAccessor(point),
             yValue: yAccessor(point),
-            seriesName: vnode.point.series.name,
+            seriesName: vnode.data.series.name,
           }}
         />
       );
