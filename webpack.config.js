@@ -79,7 +79,8 @@ if (process.env.NODE_ENV === 'production') {
 			minimize : false,
 			debug    : true,
 		}),
-		new webpack.HotModuleReplacementPlugin()
+		new webpack.HotModuleReplacementPlugin(),
+		new webpack.NamedModulesPlugin()
 	);
 }
 
