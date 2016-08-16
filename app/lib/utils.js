@@ -1,7 +1,6 @@
 import { timeFormat } from 'd3-time-format';
 import { bisector } from 'd3-array';
 import moment from 'moment';
-import numeral from 'numeral';
 
 export function date(timestamp, local = true) {
 	const date = moment.utc(timestamp);
@@ -14,7 +13,20 @@ export function date(timestamp, local = true) {
 }
 
 export function round(n, places = 1) {
-	return numeral(n).format('0,0.' + Array(places + 1).join('0'));
+	const placeValue = Math.pow(10, places);
+
+	let formatted = (Math.round(n * placeValue) / placeValue).toLocaleString();
+
+	const decimalPlaces = (formatted.split('.')[1] || '').length;
+
+	if (decimalPlaces < places) {
+		if (!decimalPlaces) {
+			formatted += '.';
+		}
+		formatted += Array(places - decimalPlaces + 1).join('0');
+	}
+
+	return formatted;
 }
 
 export const timeFormatters = {
