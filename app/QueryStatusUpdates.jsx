@@ -19,6 +19,7 @@ const debug = debugModule('QueryStatusUpdates');
 
 class QueryStatusUpdates extends React.Component {
 	componentDidMount() {
+		console.log('QueryStatusUpdates#componentDidMount');
 		this._updates = new UpdateNormalizer(1000, u => u.timestamp);
 		this._updateInterval = setCorrectingInterval(
 			this._sendQueuedUpdates.bind(this),
@@ -44,6 +45,7 @@ class QueryStatusUpdates extends React.Component {
 	}
 
 	componentWillUnmount() {
+		console.log('QueryStatusUpdates#componentWillUnmount');
 		clearCorrectingInterval(this._updateInterval);
 		this._sock.close();
 		this._sock = null;

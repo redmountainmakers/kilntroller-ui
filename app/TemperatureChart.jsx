@@ -26,6 +26,8 @@ class TemperatureChart extends React.Component {
 			windowWidth : window.innerWidth,
 		};
 		this._resize = debounce(this._resize.bind(this), 500);
+
+		undefinedFunctionCall();
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
