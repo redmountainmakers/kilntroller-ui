@@ -47,7 +47,7 @@
 		"sockjs-client"                             : "^1.1.1",
 		"style-loader"                              : "^0.13.1",
 		"type-of"                                   : "^2.0.1",
-		"webpack"                                   : "^2.1.0-beta.20",
+		"webpack"                                   : "^2.1.0-beta.21",
 		"webpack-dev-server"                        : "^2.1.0-beta.0"
 	}
 }
