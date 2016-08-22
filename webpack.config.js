@@ -48,10 +48,15 @@ if (process.env.NODE_ENV === 'production') {
 			minimize : true,
 			debug    : false,
 		}),
+		new webpack.NormalModuleReplacementPlugin(
+			/^moment$/,
+			path.join(__dirname, 'app', 'lib', 'moment-fake')
+		),
 		new ClosureCompilerPlugin({
 			compiler : {
 				compilation_level          : 'ADVANCED',
 				use_types_for_optimization : false,
+				js_externs                 : 'moment',
 			},
 		}),
 		new ExtractTextPlugin('style.css'),
