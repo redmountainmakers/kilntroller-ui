@@ -7,17 +7,17 @@ Modular ReactJS charts made using d3 chart utilities.
 
 The latest version of rd3 requires **React 0.14 or later**. If you are using older React version, please refer to [here](https://github.com/yang-wei/rd3/releases/tag/v0.5.3)
 
-### npmcdn
-Thanks to [npmcdn](https://npmcdn.com/) you can now try out rd3 quickly:
+### unpkg
+Thanks to [unpkg](https://unpkg.com/) you can now try out rd3 quickly:
 
- * https://npmcdn.com/rd3/build/public/js/react-d3.js
- * https://npmcdn.com/rd3/build/public/js/react-d3.min.js
+ * https://unpkg.com/rd3/build/public/js/react-d3.js
+ * https://unpkg.com/rd3/build/public/js/react-d3.min.js
 
 Note: rd3 depends on react and d3, you will need to include those scripts if you aren't yet.
 
- * https://npmcdn.com/react/dist/react.min.js
- * https://npmcdn.com/react-dom/dist/react-dom.min.js
- * https://npmcdn.com/d3
+ * https://unpkg.com/react/dist/react.min.js
+ * https://unpkg.com/react-dom/dist/react-dom.min.js
+ * https://unpkg.com/d3
 
 You can refer to [fiddle example](https://yang-wei.github.io/rd3/docs/new/charts/areaChart.html) too.
 
