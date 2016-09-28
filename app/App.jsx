@@ -11,6 +11,7 @@ import QueryTemperatureData  from './QueryTemperatureData';
 import TemperatureChart      from './TemperatureChart';
 import QueryControllerStatus from './QueryControllerStatus';
 import ControllerStatus      from './ControllerStatus';
+import Schedules             from './Schedules';
 
 export default function App() {
 	return (
@@ -22,6 +23,7 @@ export default function App() {
 			<TemperatureChart />
 			<QueryControllerStatus />
 			<ControllerStatus />
+			<Schedules />
 		</div>
 	);
 }

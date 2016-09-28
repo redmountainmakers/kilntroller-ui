@@ -1,0 +1,25 @@
+.Schedule {
+	.column {
+		float: left;
+		display: table-column;
+	}
+
+	.cell {
+		width: 3em;
+		text-align: right;
+		font-size: 15px;
+		line-height: 19px;
+	}
+
+	.header {
+		.cell {
+			font-weight: bold;
+			width: 7em;
+			text-align: left;
+		}
+	}
+	
+	.clear {
+		clear: both;
+	}
+}
