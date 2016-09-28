@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 
 import ScheduleStep from './ScheduleStep';
 
+import './Schedule.scss';
+
 class Schedule extends React.Component {
 	render() {
-		const { schedule } = this.props;
+		const { schedule, timestamp } = this.props;
 		const { previous, current, future } = schedule.steps;
 
 		const steps = [];
@@ -21,11 +23,13 @@ class Schedule extends React.Component {
 		});
 
 		if (current) {
+			const runningFor = timestamp - schedule.stepStartedAt;
 			steps.push(
 				<ScheduleStep
 					key={ steps.length }
 					completed={ false }
 					started
+					runningFor={ runningFor }
 					{ ...current }
 				/>
 			);
@@ -44,10 +48,11 @@ class Schedule extends React.Component {
 
 		return (
 			<div className="Schedule">
-				<div className="column header">
+				<div className="step header">
 					<div className="cell temperature">Temperature</div>
 					<div className="cell ramp">Ramp (min.)</div>
 					<div className="cell soak">Soak (min.)</div>
+					<div className="cell status">Status</div>
 				</div>
 				{ steps }
 				<div className="clear" />
@@ -57,11 +62,13 @@ class Schedule extends React.Component {
 }
 
 Schedule.propTypes = {
-	schedule : React.PropTypes.object,
+	schedule  : React.PropTypes.object,
+	timestamp : React.PropTypes.number,
 };
 
 export default connect((state, props) => {
 	return {
-		schedule : state.updates.schedule,
+		schedule  : state.updates.schedule,
+		timestamp : state.updates.status.timestamp,
 	};
 })(Schedule);

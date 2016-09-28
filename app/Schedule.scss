@@ -1,14 +1,35 @@
+@import '_vars';
+
 .Schedule {
-	.column {
+	.step {
 		float: left;
 		display: table-column;
+
+		&.completed {
+			background: $color-success-background;
+		}
+		&.in-progress {
+			background: mix(white, yellow, 75%);
+		}
+		&.future {
+			font-style: italic;
+		}
 	}
 
 	.cell {
-		width: 3em;
+		width: 40px;
+		padding-right: 3px;
 		text-align: right;
 		font-size: 15px;
 		line-height: 19px;
+
+		&.status.completed {
+			color: green;
+		}
+		&.status.in-progress {
+			font-size: 85%;
+			color: mix(black, yellow, 50%);
+		}
 	}
 
 	.header {
@@ -16,6 +37,7 @@
 			font-weight: bold;
 			width: 7em;
 			text-align: left;
+			padding: 0;
 		}
 	}
 	

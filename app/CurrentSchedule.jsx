@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 
 import Schedule from './Schedule';
 
-import './Schedule.scss';
-
 class CurrentSchedule extends React.Component {
 	render() {
 		const { schedule } = this.props;

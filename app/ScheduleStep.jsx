@@ -5,24 +5,58 @@ import * as utils from './lib/utils';
 
 class ScheduleStep extends React.Component {
 	render() {
-		const { temperature, rampMinutes, soakMinutes } = this.props;
+		const {
+			completed,
+			started,
+			runningFor,
+			temperature,
+			rampMinutes,
+			soakMinutes,
+		} = this.props;
+
+		let stepClass;
+		let status;
+		if (completed) {
+			stepClass = 'completed';
+			status = (
+				<div className="cell status completed">✓</div>
+			);
+		} else if (started) {
+			stepClass = 'in-progress';
+			let statusText;
+			if (runningFor / 60 / 1000 < rampMinutes) {
+				statusText = 'Ramp';
+			} else {
+				statusText = 'Soak';
+			}
+			status = (
+				<div className="cell status in-progress">{ statusText }</div>
+			);
+		} else {
+			stepClass = 'future';
+			status = (
+				<div className="cell status" />
+			);
+		}
 
 		return (
-			<div className="column">
+			<div className={ 'step ' + stepClass }>
 				<div className="cell temperature">{ utils.round(temperature, 0) }</div>
 				<div className="cell ramp">{ utils.round(rampMinutes, 0) }</div>
 				<div className="cell soak">{ utils.round(soakMinutes, 0) }</div>
+				{ status }
 			</div>
 		);
 	}
 }
 
 ScheduleStep.propTypes = {
-	completed        : React.PropTypes.bool,
-	started          : React.PropTypes.bool,
-	temperature      : React.PropTypes.number,
-	rampMinutes      : React.PropTypes.number,
-	soakMinutes      : React.PropTypes.number,
+	completed   : React.PropTypes.bool,
+	started     : React.PropTypes.bool,
+	runningFor  : React.PropTypes.number,
+	temperature : React.PropTypes.number,
+	rampMinutes : React.PropTypes.number,
+	soakMinutes : React.PropTypes.number,
 };
 
 export default connect((state, props) => {
