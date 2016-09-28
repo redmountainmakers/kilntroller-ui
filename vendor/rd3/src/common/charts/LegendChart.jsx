@@ -35,7 +35,7 @@ module.exports = React.createClass({
       data: [],
       legend: false,
       legendPosition: 'right',
-      sideOffset: 90,
+      sideOffset: 110,
       svgClassName: 'rd3-chart',
       titleClassName: 'rd3-chart-title',
       title: '',
