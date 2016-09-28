@@ -88,7 +88,10 @@ class TemperatureChart extends React.Component {
 			const schedule = { name : 'Scheduled', values : [] };
 
 			const { previous, current, future } = scheduleObj.steps;
-			const runningForMinutes = Math.max(0, currentTimestamp - scheduleObj.stepStartedAt) / 60 / 1000;
+			const runningForMinutes = Math.max(
+				0,
+				currentTimestamp - scheduleObj.stepStartedAt
+			) / 60 / 1000;
 			if (runningForMinutes < current.rampMinutes) {
 				// Partway through the ramp phase; interpolate
 				const previousTemperature = previous[previous.length - 1].temperature;
