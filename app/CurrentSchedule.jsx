@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Schedule from './Schedule';
+import ClearCurrentSchedule from './ClearCurrentSchedule';
 
 class CurrentSchedule extends React.Component {
 	render() {
@@ -9,10 +10,13 @@ class CurrentSchedule extends React.Component {
 
 		if (schedule && schedule.steps && schedule.steps.current) {
 			return (
-				<Schedule
-					schedule={ schedule }
-					currentTimestamp={ currentTimestamp }
-				/>
+				<div>
+					<Schedule
+						schedule={ schedule }
+						currentTimestamp={ currentTimestamp }
+					/>
+					<ClearCurrentSchedule />
+				</div>
 			);
 		} else {
 			return (
@@ -21,7 +25,6 @@ class CurrentSchedule extends React.Component {
 		}
 	}
 }
-
 
 CurrentSchedule.propTypes = {
 	schedule         : React.PropTypes.object,

@@ -1,0 +1,35 @@
+@import '_vars';
+
+.ClearCurrentSchedule {
+	margin-top: 12px;
+
+	.confirm-text {
+		color: $color-error-text;
+		font-size: 90%;
+		margin-bottom: 6px;
+	}
+	
+	button {
+		padding: 3px 6px;
+		margin-right: 4px;
+		font-size: 85%;
+		background: $color-error-background;
+		color: $color-error-text;
+		border: 1px solid mix($color-error-text, $color-error-background, 50%);
+		border-radius: 3px;
+
+		&:hover {
+			background: mix($color-error-text, $color-error-background, 10%);
+		}
+
+		&.cancel {
+			background: $color-loading-background;
+			color: $color-loading-text;
+			border: 1px solid mix($color-loading-text, $color-loading-background, 50%);
+
+			&:hover {
+				background: mix($color-loading-text, $color-loading-background, 10%);
+			}
+		}
+	}
+}
