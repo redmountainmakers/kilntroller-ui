@@ -8,7 +8,7 @@ class ScheduleStep extends React.Component {
 		const {
 			completed,
 			started,
-			runningFor,
+			runningForMinutes,
 			temperature,
 			rampMinutes,
 			soakMinutes,
@@ -24,7 +24,7 @@ class ScheduleStep extends React.Component {
 		} else if (started) {
 			stepClass = 'in-progress';
 			let statusText;
-			if (runningFor / 60 / 1000 < rampMinutes) {
+			if (runningForMinutes < rampMinutes) {
 				statusText = 'Ramp';
 			} else {
 				statusText = 'Soak';
@@ -51,12 +51,12 @@ class ScheduleStep extends React.Component {
 }
 
 ScheduleStep.propTypes = {
-	completed   : React.PropTypes.bool,
-	started     : React.PropTypes.bool,
-	runningFor  : React.PropTypes.number,
-	temperature : React.PropTypes.number,
-	rampMinutes : React.PropTypes.number,
-	soakMinutes : React.PropTypes.number,
+	completed         : React.PropTypes.bool,
+	started           : React.PropTypes.bool,
+	runningForMinutes : React.PropTypes.number,
+	temperature       : React.PropTypes.number,
+	rampMinutes       : React.PropTypes.number,
+	soakMinutes       : React.PropTypes.number,
 };
 
 export default connect((state, props) => {

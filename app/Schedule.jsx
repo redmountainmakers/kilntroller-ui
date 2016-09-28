@@ -7,7 +7,7 @@ import './Schedule.scss';
 
 class Schedule extends React.Component {
 	render() {
-		const { schedule, timestamp } = this.props;
+		const { schedule, currentTimestamp } = this.props;
 		const { previous, current, future } = schedule.steps;
 
 		const steps = [];
@@ -23,13 +23,13 @@ class Schedule extends React.Component {
 		});
 
 		if (current) {
-			const runningFor = timestamp - schedule.stepStartedAt;
+			const runningForMinutes = (currentTimestamp - schedule.stepStartedAt) / 60 / 1000;
 			steps.push(
 				<ScheduleStep
 					key={ steps.length }
 					completed={ false }
 					started
-					runningFor={ runningFor }
+					runningForMinutes={ runningForMinutes }
 					{ ...current }
 				/>
 			);
@@ -62,13 +62,8 @@ class Schedule extends React.Component {
 }
 
 Schedule.propTypes = {
-	schedule  : React.PropTypes.object,
-	timestamp : React.PropTypes.number,
+	schedule         : React.PropTypes.object,
+	currentTimestamp : React.PropTypes.number,
 };
 
-export default connect((state, props) => {
-	return {
-		schedule  : state.updates.schedule,
-		timestamp : state.updates.status.timestamp,
-	};
-})(Schedule);
+export default Schedule;

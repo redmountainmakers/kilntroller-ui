@@ -5,24 +5,32 @@ import Schedule from './Schedule';
 
 class CurrentSchedule extends React.Component {
 	render() {
-		const { schedule } = this.props;
+		const { schedule, currentTimestamp } = this.props;
 
 		if (schedule && schedule.steps && schedule.steps.current) {
 			return (
-				<Schedule schedule={ schedule } />
+				<Schedule
+					schedule={ schedule }
+					currentTimestamp={ currentTimestamp }
+				/>
+			);
+		} else {
+			return (
+				<div>No schedule is currently set.</div>
 			);
 		}
-
-		return null;
 	}
 }
 
+
 CurrentSchedule.propTypes = {
-	schedule : React.PropTypes.object,
+	schedule         : React.PropTypes.object,
+	currentTimestamp : React.PropTypes.number,
 };
 
 export default connect((state, props) => {
 	return {
-		schedule : state.updates.schedule,
+		schedule         : state.updates.schedule,
+		currentTimestamp : state.updates.status.timestamp,
 	};
 })(CurrentSchedule);

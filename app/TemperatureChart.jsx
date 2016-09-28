@@ -51,7 +51,8 @@ class TemperatureChart extends React.Component {
 	}
 
 	getFormattedData() {
-		const { min, data } = this.props;
+		const { min, data, currentTimestamp } = this.props;
+		const scheduleObj = this.props.schedule;
 
 		const actual = { name : 'Actual', values : [], _missing : 0 };
 		const target = { name : 'Target', values : [], _missing : 0 };
@@ -81,17 +82,87 @@ class TemperatureChart extends React.Component {
 			target.values.push({ x, y });
 		}
 
-		return [omit(actual, '_missing'), omit(target, '_missing')];
+		const allSeries = [omit(actual, '_missing'), omit(target, '_missing')];
+
+		if (scheduleObj && scheduleObj.steps && scheduleObj.steps.current) {
+			const schedule = { name : 'Scheduled', values : [] };
+
+			const { previous, current, future } = scheduleObj.steps;
+			const runningForMinutes = Math.max(0, currentTimestamp - scheduleObj.stepStartedAt) / 60 / 1000;
+			if (runningForMinutes < current.rampMinutes) {
+				// Partway through the ramp phase; interpolate
+				const previousTemperature = previous[previous.length - 1].temperature;
+				schedule.values.push({
+					x : utils.date(currentTimestamp),
+					y : (
+						previousTemperature +
+						(current.temperature - previousTemperature) *
+						(runningForMinutes / current.rampMinutes)
+					),
+				});
+				schedule.values.push({
+					x : utils.date(
+						scheduleObj.stepStartedAt +
+						current.rampMinutes * 60 * 1000
+					),
+					y : current.temperature,
+				});
+			} else {
+				schedule.values.push({
+					x : utils.date(currentTimestamp),
+					y : current.temperature,
+				});
+			}
+
+			let stepEndsAt = (
+				scheduleObj.stepStartedAt +
+				current.rampMinutes * 60 * 1000 +
+				current.soakMinutes * 60 * 1000
+			);
+			schedule.values.push({
+				x : utils.date(stepEndsAt),
+				y : current.temperature,
+			});
+
+			(future || []).forEach(step => {
+				stepEndsAt += step.rampMinutes * 60 * 1000;
+				schedule.values.push({
+					x : utils.date(stepEndsAt),
+					y : step.temperature,
+				});
+				stepEndsAt += step.soakMinutes * 60 * 1000;
+				schedule.values.push({
+					x : utils.date(stepEndsAt),
+					y : step.temperature,
+				});
+			});
+
+			allSeries.push(schedule);
+		}
+
+		return allSeries;
 	}
 
 	getDomain() {
-		const { min, max, data } = this.props;
+		const { min, data, schedule } = this.props;
+		let { max } = this.props;
 
 		let temperatureRange;
 		if (data && data.length) {
+			// TODO we're not handling the case where schedule is set but data
+			// isn't.  This should be impossible anyway?
 			temperatureRange = extent(data, point => point.temperature);
 		} else {
 			temperatureRange = [Infinity, -Infinity];
+		}
+
+		if (schedule && schedule.steps && schedule.steps.current) {
+			max = schedule.stepStartedAt;
+			const { current, future } = schedule.steps;
+			[current].concat(future || []).forEach(step => {
+				max += step.rampMinutes * 60 * 1000;
+				max += step.soakMinutes * 60 * 1000;
+			});
 		}
 
 		return {
@@ -189,11 +260,13 @@ class TemperatureChart extends React.Component {
 }
 
 TemperatureChart.propTypes = {
-	min       : React.PropTypes.number,
-	max       : React.PropTypes.number,
-	loading   : React.PropTypes.bool,
-	data      : React.PropTypes.array,
-	readError : React.PropTypes.string,
+	min              : React.PropTypes.number,
+	max              : React.PropTypes.number,
+	schedule         : React.PropTypes.object,
+	currentTimestamp : React.PropTypes.number,
+	loading          : React.PropTypes.bool,
+	data             : React.PropTypes.array,
+	readError        : React.PropTypes.string,
 };
 
 export default connect((state, props) => {
@@ -203,8 +276,10 @@ export default connect((state, props) => {
 	const readError = state.errors.dataRequest;
 
 	return {
-		min : range.min,
-		max : range.max,
+		min              : range.min,
+		max              : range.max,
+		schedule         : state.updates.schedule,
+		currentTimestamp : state.updates.status.timestamp,
 		loading,
 		data,
 		readError,
