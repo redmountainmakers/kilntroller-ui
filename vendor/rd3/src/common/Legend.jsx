@@ -36,6 +36,9 @@ module.exports = React.createClass({
       color: 'black',
       fontSize: '50%',
       verticalAlign: 'top',
+      position: 'relative',
+      top: '2px',
+      left: '-6px',
     };
 
     const legendItems = [];
@@ -70,7 +73,7 @@ module.exports = React.createClass({
       paddingLeft: 0,
       marginBottom: 0,
       marginTop: topMargin,
-      listStylePosition: 'inside',
+      listStylePosition: 'outside',
       listStyleType: 'disc',
     };
 
