@@ -24,6 +24,7 @@ const config = {
 				loaders : ['babel'],
 			},
 		],
+		exprContextCritical : false,
 	},
 	output : {
 		path       : BUILD_DIR,

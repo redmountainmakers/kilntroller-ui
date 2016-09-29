@@ -1,4 +1,5 @@
 import React from 'react';
+import { Component as StateHistoryDevTool } from 'redux-state-history';
 
 import '../vendor/gridicon/style.scss';
 import '../vendor/reset.scss';
@@ -13,7 +14,7 @@ import QueryControllerStatus from './QueryControllerStatus';
 import ControllerStatus      from './ControllerStatus';
 import Schedules             from './Schedules';
 
-export default function App() {
+export default function App({ store }) {
 	return (
 		<div>
 			<Ticker />
@@ -24,6 +25,11 @@ export default function App() {
 			<QueryControllerStatus />
 			<ControllerStatus />
 			<Schedules />
+			<StateHistoryDevTool { ...store.stateHistory } />
 		</div>
 	);
 }
+
+App.propTypes = {
+	store : React.PropTypes.object,
+};

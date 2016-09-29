@@ -12,4 +12,5 @@ export const reducer = combineReducers({
 	errors,
 	time,
 	updates,
+	stateHistory: (state = {}, action) => state,
 });
