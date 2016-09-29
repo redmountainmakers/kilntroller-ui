@@ -54,7 +54,15 @@ function ControllerStatus({ requesting, isConnected, error }) {
 		);
 	}
 
-	throw new Error('Should never get here');
+	// It's possible to get here while debugging and replaying state history
+	return (
+		<SectionBody className="ControllerStatus error">
+			<Gridicon icon="notice-outline" size={ 24 } />
+			<div className="content">
+				You should never see this.  Maybe you did something weird?
+			</div>
+		</SectionBody>
+	);
 }
 
 ControllerStatus.propTypes = {

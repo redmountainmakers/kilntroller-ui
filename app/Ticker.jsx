@@ -16,7 +16,7 @@ class Ticker extends React.Component {
 		const now = +new Date;
 		const then = 10000 + now - (now % 10000);
 		this._timeout = setTimeout(() => {
-			this.props.sendTick(then);
+			// this.props.sendTick(then);
 			this.schedule();
 		}, then - now);
 	}

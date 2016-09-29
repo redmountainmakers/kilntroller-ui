@@ -6,6 +6,8 @@ export const apiWriteRoot = 'http://chip1.internal.redmountainmakers.org:3000';
 export const apiUpdatePath = apiReadRoot + '/sockjs';
 
 function jsonRequest(method, url, settings, cb) {
+	return;
+
 	if (typeof settings === 'function') {
 		cb = settings;
 		settings = {};

@@ -19,6 +19,8 @@ const debug = debugModule('QueryStatusUpdates');
 
 class QueryStatusUpdates extends React.Component {
 	componentDidMount() {
+		return;
+
 		this._updates = new UpdateNormalizer(10000, u => u.timestamp);
 		this._updateInterval = setCorrectingInterval(
 			this._sendQueuedUpdates.bind(this),
