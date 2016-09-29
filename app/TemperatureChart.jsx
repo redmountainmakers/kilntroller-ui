@@ -163,6 +163,8 @@ class TemperatureChart extends React.Component {
 			max = schedule.stepStartedAt;
 			const { current, future } = schedule.steps;
 			[current].concat(future || []).forEach(step => {
+				temperatureRange[0] = Math.min(temperatureRange[0], step.temperature);
+				temperatureRange[1] = Math.max(temperatureRange[1], step.temperature);
 				max += step.rampMinutes * 60 * 1000;
 				max += step.soakMinutes * 60 * 1000;
 			});
