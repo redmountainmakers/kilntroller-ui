@@ -47,7 +47,7 @@ class KilnStatus extends React.Component {
 
 			const now = moment.utc(this.props.time);
 			const diff = now.diff(date, 'seconds');
-			if (diff > 10) {
+			if (diff > 30) {
 				if (diff < 45) {
 					outdatedStatus = `Last updated: ${ diff } seconds ago`;
 				} else {

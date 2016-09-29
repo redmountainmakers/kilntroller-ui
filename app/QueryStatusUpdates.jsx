@@ -19,10 +19,10 @@ const debug = debugModule('QueryStatusUpdates');
 
 class QueryStatusUpdates extends React.Component {
 	componentDidMount() {
-		this._updates = new UpdateNormalizer(1000, u => u.timestamp);
+		this._updates = new UpdateNormalizer(10000, u => u.timestamp);
 		this._updateInterval = setCorrectingInterval(
 			this._sendQueuedUpdates.bind(this),
-			1000
+			10000
 		);
 		this._sock = new SockJS(apiUpdatePath);
 		this._sock.onmessage = e => {
