@@ -12,7 +12,7 @@ function jsonRequest(method, url, settings, cb) {
 	}
 	ajax({
 		...settings,
-		method,
+		type : method,
 		url,
 		dataType : 'json',
 		success  : (data, status, xhr) => {
@@ -52,6 +52,16 @@ export function getKilnStatus(cb) {
 
 export function getControllerStatus(cb) {
 	jsonRequest('GET', apiWriteRoot + '/status', (err, result) => {
+		cb(err, result);
+	});
+}
+
+export function clearControllerSchedule(cb) {
+	jsonRequest('POST', apiWriteRoot + '/schedule', {
+		data : {
+			schedule : null,
+		},
+	}, (err, result) => {
 		cb(err, result);
 	});
 }

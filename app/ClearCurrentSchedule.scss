@@ -23,7 +23,7 @@
 			background: mix($color-error-text, $color-error-background, 10%);
 		}
 
-		&.cancel {
+		&.cancel, &.dismiss {
 			background: $color-loading-background;
 			color: $color-loading-text;
 			border: 1px solid mix($color-loading-text, $color-loading-background, 50%);
@@ -31,6 +31,17 @@
 			&:hover {
 				background: mix($color-loading-text, $color-loading-background, 10%);
 			}
+		}
+	}
+
+	&.error {
+		background: $color-error-background;
+		color: $color-error-text;
+		padding: 8px 4px 8px 12px;
+		display: inline-block;
+
+		button.dismiss {
+			margin-left: 1em;
 		}
 	}
 }

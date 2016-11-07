@@ -1,6 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import {
+	clearControllerSchedule,
+	dismissClearControllerScheduleError,
+} from './actions/controller';
+
 import './ClearCurrentSchedule.scss';
 
 class ClearCurrentSchedule extends React.Component {
@@ -10,10 +15,11 @@ class ClearCurrentSchedule extends React.Component {
 		this._boundConfirmClear    = this._confirmClear.bind(this);
 		this._boundCancelClear     = this._cancelClear.bind(this);
 		this._boundPromptToConfirm = this._promptToConfirm.bind(this);
+		this._boundDismissError    = this._dismissError.bind(this);
 	}
 
 	_confirmClear() {
-		console.log('clear');
+		this.props.clearControllerSchedule();
 		this.setState({ confirmClear : false });
 	}
 
@@ -25,8 +31,30 @@ class ClearCurrentSchedule extends React.Component {
 		this.setState({ confirmClear : true });
 	}
 
+	_dismissError() {
+		this.props.dismissClearControllerScheduleError();
+	}
+
 	render() {
-		if (this.state.confirmClear) {
+		if (this.props.clearScheduleError) {
+			return (
+				<div className="ClearCurrentSchedule error">
+					Error clearing schedule: { this.props.clearScheduleError }
+					<button
+						className="dismiss"
+						onClick={ this._boundDismissError }
+					>
+						Dismiss
+					</button>
+				</div>
+			);
+		} else if (this.props.isClearingSchedule) {
+			return (
+				<div className="ClearCurrentSchedule loading">
+					Clearing schedule...
+				</div>
+			);
+		} else if (this.state.confirmClear) {
 			return (
 				<div className="ClearCurrentSchedule confirm">
 					<div className="confirm-text">
@@ -61,8 +89,19 @@ class ClearCurrentSchedule extends React.Component {
 	}
 }
 
-export default connect((state, props) => {
-	return {};
-}, {
+ClearCurrentSchedule.propTypes = {
+	isClearingSchedule                  : React.PropTypes.bool,
+	clearScheduleError                  : React.PropTypes.string,
+	clearControllerSchedule             : React.PropTypes.func,
+	dismissClearControllerScheduleError : React.PropTypes.func,
+};
 
+export default connect((state, props) => {
+	return {
+		isClearingSchedule : state.controller.clearingSchedule,
+		clearScheduleError : state.controller.clearScheduleError,
+	};
+}, {
+	clearControllerSchedule,
+	dismissClearControllerScheduleError,
 })(ClearCurrentSchedule);

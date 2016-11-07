@@ -21,3 +21,34 @@ export function requestControllerStatus() {
 		});
 	};
 }
+
+export function clearControllerSchedule() {
+	return dispatch => {
+		dispatch({
+			type : 'CONTROLLER_SCHEDULE_CLEAR',
+		});
+
+		api.clearControllerSchedule((err, result) => {
+			if (err || !result.ok) {
+				err = (err ? err.message : result.error || result);
+				if (typeof err !== 'string') {
+					err = JSON.stringify(err);
+				}
+				dispatch({
+					type  : 'CONTROLLER_SCHEDULE_CLEAR_ERROR',
+					error : err,
+				});
+			} else {
+				dispatch({
+					type : 'CONTROLLER_SCHEDULE_CLEAR_SUCCESS',
+				});
+			}
+		});
+	};
+}
+
+export function dismissClearControllerScheduleError() {
+	return {
+		type : 'CONTROLLER_SCHEDULE_CLEAR_ERROR_DISMISS',
+	};
+}
