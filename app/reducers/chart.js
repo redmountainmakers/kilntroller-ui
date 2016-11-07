@@ -5,8 +5,8 @@ import moment from 'moment';
 export function getLatestRange() {
 	const now = moment.utc();
 	return {
-		min : + now.clone().subtract( 8, 'hours' ),
-		max : + now,
+		min : +now.clone().subtract( 8, 'hours' ),
+		max : +now,
 	};
 }
 

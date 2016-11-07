@@ -9,17 +9,17 @@ chai.use( dirtyChai );
 describe( 'round', () => {
 	it( 'should round numbers and format with commas', () => {
 		expect( utils.round( 1234.567 ) ).to.eql( '1,234.6' );
-		expect( utils.round( - 1234.567, 2 ) ).to.eql( '-1,234.57' );
+		expect( utils.round( -1234.567, 2 ) ).to.eql( '-1,234.57' );
 		expect( utils.round( 123, 0 ) ).to.eql( '123' );
-		expect( utils.round( - 123, 2 ) ).to.eql( '-123.00' );
+		expect( utils.round( -123, 2 ) ).to.eql( '-123.00' );
 		expect( utils.round( 12345678.12, 0 ) ).to.eql( '12,345,678' );
-		expect( utils.round( - 12345678.12, 0 ) ).to.eql( '-12,345,678' );
+		expect( utils.round( -12345678.12, 0 ) ).to.eql( '-12,345,678' );
 		expect( utils.round( 12345678.12, 1 ) ).to.eql( '12,345,678.1' );
-		expect( utils.round( - 12345678.12, 1 ) ).to.eql( '-12,345,678.1' );
+		expect( utils.round( -12345678.12, 1 ) ).to.eql( '-12,345,678.1' );
 		expect( utils.round( 12345678.12, 2 ) ).to.eql( '12,345,678.12' );
-		expect( utils.round( - 12345678.12, 2 ) ).to.eql( '-12,345,678.12' );
+		expect( utils.round( -12345678.12, 2 ) ).to.eql( '-12,345,678.12' );
 		expect( utils.round( 12345678.12, 3 ) ).to.eql( '12,345,678.120' );
-		expect( utils.round( - 12345678.12, 3 ) ).to.eql( '-12,345,678.120' );
+		expect( utils.round( -12345678.12, 3 ) ).to.eql( '-12,345,678.120' );
 	} );
 } );
 
@@ -27,7 +27,7 @@ describe( 'UpdateNormalizer', () => {
 	it( 'should return batches of updates', () => {
 		const normalizer = new utils.UpdateNormalizer( 1000 );
 		let x = 0;
-		for ( let i = 1; i <= 1000; i ++ ) {
+		for ( let i = 1; i <= 1000; i++ ) {
 			const val = 601 * i;
 			normalizer.queue( val );
 			if ( x < val ) {

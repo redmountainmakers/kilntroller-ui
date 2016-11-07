@@ -157,7 +157,16 @@ module.exports = {
 		'space-before-function-paren' : [ 'error', 'never' ],
 		'space-in-parens'             : [ 'error', 'always' ],
 		'space-infix-ops'             : 'error',
-		'space-unary-ops'             : [ 'error', { words : true, nonwords : true } ],
+		'space-unary-ops'             : [ 'error', {
+			words     : true,
+			nonwords  : true,
+			overrides : {
+				'++' : false,
+				'--' : false,
+				'+'  : false,
+				'-'  : false,
+			},
+		} ],
 		'spaced-comment'              : 'error',
 		'unicode-bom'                 : 'error',
 		// ES6

@@ -54,7 +54,7 @@ class QueryStatusUpdates extends React.Component {
 		if ( updates.length ) {
 			const condensedUpdates = {};
 			updates.forEach( u => {
-				debug( 'send', + new Date, u );
+				debug( 'send', +new Date, u );
 				condensedUpdates[ u.type ] = u;
 			} );
 			forOwn( condensedUpdates, u => this.props.receiveUpdate( u ) );

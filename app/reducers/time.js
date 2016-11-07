@@ -4,5 +4,5 @@ export default function time( state = null, action ) {
 			return action.timestamp;
 	}
 
-	return state || + new Date;
+	return state || +new Date;
 }

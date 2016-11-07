@@ -15,7 +15,7 @@ export function getDataRange( state ) {
 	} else {
 		return {
 			min : Infinity,
-			max : - Infinity,
+			max : -Infinity,
 		};
 	}
 }
@@ -72,7 +72,7 @@ export function getNextChartDataRequest( state ) {
 		};
 
 		const completed = state.chart.requests.completed;
-		for ( let i = completed.length - 1; i >= completed.length - 5 && i >= 0; i -- ) {
+		for ( let i = completed.length - 1; i >= completed.length - 5 && i >= 0; i-- ) {
 			if ( isEqual( completed[ i ], request ) ) {
 				return null;
 			}

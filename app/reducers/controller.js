@@ -5,13 +5,13 @@ export function status( state = null, action ) {
 		case 'CONTROLLER_STATUS_RECEIVE':
 			return {
 				data      : action.data,
-				timestamp : + new Date,
+				timestamp : +new Date,
 			};
 
 		case 'CONTROLLER_STATUS_REQUEST_ERROR':
 			return {
 				data      : false,
-				timestamp : + new Date,
+				timestamp : +new Date,
 			};
 	}
 

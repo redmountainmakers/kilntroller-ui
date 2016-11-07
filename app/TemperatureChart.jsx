@@ -64,13 +64,13 @@ class TemperatureChart extends React.Component {
 				if ( typeof value.temperature === 'number' ) {
 					actual._missing = 0;
 					actual.values.push( { x, y : value.temperature } );
-				} else if ( ++ actual._missing === 5 ) {
+				} else if ( ++actual._missing === 5 ) {
 					actual.values.push( { x, y : null } );
 				}
 				if ( typeof value.setpoint === 'number' ) {
 					target._missing = 0;
 					target.values.push( { x, y : value.setpoint } );
-				} else if ( ++ target._missing === 5 ) {
+				} else if ( ++target._missing === 5 ) {
 					target.values.push( { x, y : null } );
 				}
 			} );
@@ -156,7 +156,7 @@ class TemperatureChart extends React.Component {
 			// isn't.  This should be impossible anyway?
 			temperatureRange = extent( data, point => point.temperature );
 		} else {
-			temperatureRange = [ Infinity, - Infinity ];
+			temperatureRange = [ Infinity, -Infinity ];
 		}
 
 		if ( schedule && schedule.steps && schedule.steps.current ) {
