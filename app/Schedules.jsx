@@ -13,7 +13,7 @@ import {
 
 class Schedules extends React.Component {
 	render() {
-		if (!this.props.isConnected) {
+		if ( ! this.props.isConnected ) {
 			return null;
 		}
 
@@ -40,8 +40,8 @@ Schedules.propTypes = {
 	isConnected : React.PropTypes.bool,
 };
 
-export default connect((state, props) => {
+export default connect( ( state, props ) => {
 	return {
-		isConnected : isControllerConnected(state),
+		isConnected : isControllerConnected( state ),
 	};
-})(Schedules);
+} )( Schedules );

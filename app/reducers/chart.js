@@ -5,22 +5,22 @@ import moment from 'moment';
 export function getLatestRange() {
 	const now = moment.utc();
 	return {
-		min : +now.clone().subtract(8, 'hours'),
-		max : +now,
+		min : + now.clone().subtract( 8, 'hours' ),
+		max : + now,
 	};
 }
 
-export function range(state = {}, action) {
-	if (!state.min || !state.max) {
+export function range( state = {}, action ) {
+	if ( ! state.min || ! state.max ) {
 		return getLatestRange();
 	}
 
-	switch (action.type) {
+	switch ( action.type ) {
 		case 'ADVANCE_CHART_RANGE':
 			return getLatestRange();
 
 		case 'USER_ZOOM':
-			if (action.min && action.max) {
+			if ( action.min && action.max ) {
 				return {
 					min : action.min,
 					max : action.max,
@@ -32,10 +32,10 @@ export function range(state = {}, action) {
 	return state;
 }
 
-export function data(state = [], action) {
-	switch (action.type) {
+export function data( state = [], action ) {
+	switch ( action.type ) {
 		case 'DATA_RECEIVE':
-			if (!Array.isArray(action.data) || !action.data.length) {
+			if ( ! Array.isArray( action.data ) || ! action.data.length ) {
 				return state;
 			}
 			return action.data;
@@ -44,8 +44,8 @@ export function data(state = [], action) {
 	return state;
 }
 
-export function requests(state = {}, action) {
-	if (!state.pending || !state.completed) {
+export function requests( state = {}, action ) {
+	if ( ! state.pending || ! state.completed ) {
 		return {
 			pending      : [],
 			completed    : [],
@@ -53,32 +53,32 @@ export function requests(state = {}, action) {
 		};
 	}
 
-	if (!action.requested) {
+	if ( ! action.requested ) {
 		return state;
 	}
-	const request = pick(action.requested, 'min', 'max', 'count');
+	const request = pick( action.requested, 'min', 'max', 'count' );
 
-	switch (action.type) {
+	switch ( action.type ) {
 		case 'DATA_REQUEST':
 			return {
-				pending      : state.pending.concat([request]),
+				pending      : state.pending.concat( [ request ] ),
 				completed    : state.completed,
 				maxTimestamp : state.maxTimestamp,
 			};
 
 		case 'DATA_RECEIVE':
 			return {
-				pending      : state.pending.filter(r => !isEqual(request, r)),
-				completed    : state.completed.concat([request]),
-				maxTimestamp : Math.max(state.maxTimestamp, request.max),
+				pending      : state.pending.filter( r => ! isEqual( request, r ) ),
+				completed    : state.completed.concat( [ request ] ),
+				maxTimestamp : Math.max( state.maxTimestamp, request.max ),
 			};
 	}
 
 	return state;
 }
 
-export default combineReducers({
+export default combineReducers( {
 	range,
 	data,
 	requests,
-});
+} );

@@ -11,7 +11,7 @@ class Schedule extends React.Component {
 
 		const steps = [];
 
-		(previous || []).forEach(step => {
+		( previous || [] ).forEach( step => {
 			steps.push(
 				<ScheduleStep
 					key={ steps.length }
@@ -19,10 +19,10 @@ class Schedule extends React.Component {
 					{ ...step }
 				/>
 			);
-		});
+		} );
 
-		if (current) {
-			const runningForMinutes = (currentTimestamp - schedule.stepStartedAt) / 60 / 1000;
+		if ( current ) {
+			const runningForMinutes = ( currentTimestamp - schedule.stepStartedAt ) / 60 / 1000;
 			steps.push(
 				<ScheduleStep
 					key={ steps.length }
@@ -34,7 +34,7 @@ class Schedule extends React.Component {
 			);
 		}
 
-		(future || []).forEach(step => {
+		( future || [] ).forEach( step => {
 			steps.push(
 				<ScheduleStep
 					key={ steps.length }
@@ -43,7 +43,7 @@ class Schedule extends React.Component {
 					{ ...step }
 				/>
 			);
-		});
+		} );
 
 		return (
 			<div className="Schedule">

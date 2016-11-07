@@ -4,9 +4,9 @@ const defaultConfig = {
 
 let localConfig = {};
 try {
-	localConfig = require('./local.json');
-} catch (err) {}
+	localConfig = require( './local.json' );
+} catch ( err ) {}
 
-localConfig = Object.assign({}, defaultConfig, localConfig);
+localConfig = Object.assign( {}, defaultConfig, localConfig );
 
 module.exports = localConfig;

@@ -11,7 +11,7 @@ import App from './App';
 const store = createStore(
 	reducer,
 	compose(
-		applyMiddleware(thunkMiddleware),
+		applyMiddleware( thunkMiddleware ),
 		window.devToolsExtension ? window.devToolsExtension() : f => f
 	)
 );
@@ -23,14 +23,14 @@ render(
 		React.createElement(
 			Provider,
 			{ store },
-			React.createElement(App)
+			React.createElement( App )
 		)
 	),
-	document.getElementById('app')
+	document.getElementById( 'app' )
 );
 
-if (module.hot) {
-	module.hot.accept('./App', () => {
+if ( module.hot ) {
+	module.hot.accept( './App', () => {
 		render(
 			React.createElement(
 				AppContainer,
@@ -38,10 +38,10 @@ if (module.hot) {
 				React.createElement(
 					Provider,
 					{ store },
-					React.createElement(require('./App').default)
+					React.createElement( require( './App' ).default )
 				)
 			),
-			document.getElementById('app')
+			document.getElementById( 'app' )
 		);
-	});
+	} );
 }

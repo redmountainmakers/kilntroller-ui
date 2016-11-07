@@ -12,14 +12,14 @@ import {
 
 class QueryTemperatureData extends React.Component {
 	componentWillMount() {
-		this.maybeRequestData(this.props);
+		this.maybeRequestData( this.props );
 	}
 
-	componentWillReceiveProps(nextProps) {
-		this.maybeRequestData(nextProps);
+	componentWillReceiveProps( nextProps ) {
+		this.maybeRequestData( nextProps );
 	}
 
-	maybeRequestData(props) {
+	maybeRequestData( props ) {
 		const {
 			nextDataRequest,
 			requestTemperatureData,
@@ -28,8 +28,8 @@ class QueryTemperatureData extends React.Component {
 			maxTimestampRequested,
 			currentTimestamp,
 		} = props;
-		if (nextDataRequest) {
-			requestTemperatureData(nextDataRequest);
+		if ( nextDataRequest ) {
+			requestTemperatureData( nextDataRequest );
 		} else if (
 			maxTimestampRequested > currentTimestamp - 10000 &&
 			maxTimestampRequested < currentTimestamp - 5000 &&
@@ -57,9 +57,9 @@ QueryTemperatureData.propTypes = {
 };
 
 export default connect(
-	(state, props) => {
-		const nextDataRequest       = getNextChartDataRequest(state);
-		const chartMaxTimestamp     = getChartRange(state).max;
+	( state, props ) => {
+		const nextDataRequest       = getNextChartDataRequest( state );
+		const chartMaxTimestamp     = getChartRange( state ).max;
 		const maxTimestampRequested = state.chart.requests.maxTimestamp;
 		const currentTimestamp      = state.time;
 
@@ -73,4 +73,4 @@ export default connect(
 		requestTemperatureData,
 		advanceChartRange,
 	}
-)(QueryTemperatureData);
+)( QueryTemperatureData );

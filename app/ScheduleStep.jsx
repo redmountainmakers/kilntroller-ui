@@ -16,15 +16,15 @@ class ScheduleStep extends React.Component {
 
 		let stepClass;
 		let status;
-		if (completed) {
+		if ( completed ) {
 			stepClass = 'completed';
 			status = (
 				<div className="cell status completed">✓</div>
 			);
-		} else if (started) {
+		} else if ( started ) {
 			stepClass = 'in-progress';
 			let statusText;
-			if (runningForMinutes < rampMinutes) {
+			if ( runningForMinutes < rampMinutes ) {
 				statusText = 'Ramp';
 			} else {
 				statusText = 'Soak';
@@ -41,9 +41,9 @@ class ScheduleStep extends React.Component {
 
 		return (
 			<div className={ 'step ' + stepClass }>
-				<div className="cell temperature">{ utils.round(temperature, 0) }</div>
-				<div className="cell ramp">{ utils.round(rampMinutes, 0) }</div>
-				<div className="cell soak">{ utils.round(soakMinutes, 0) }</div>
+				<div className="cell temperature">{ utils.round( temperature, 0 ) }</div>
+				<div className="cell ramp">{ utils.round( rampMinutes, 0 ) }</div>
+				<div className="cell soak">{ utils.round( soakMinutes, 0 ) }</div>
 				{ status }
 			</div>
 		);
@@ -59,8 +59,8 @@ ScheduleStep.propTypes = {
 	soakMinutes       : React.PropTypes.number,
 };
 
-export default connect((state, props) => {
+export default connect( ( state, props ) => {
 	return {
 		schedule : state.updates.schedule,
 	};
-})(ScheduleStep);
+} )( ScheduleStep );

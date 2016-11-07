@@ -8,7 +8,7 @@ class CurrentSchedule extends React.Component {
 	render() {
 		const { schedule, currentTimestamp } = this.props;
 
-		if (schedule && schedule.steps && schedule.steps.current) {
+		if ( schedule && schedule.steps && schedule.steps.current ) {
 			return (
 				<div>
 					<Schedule
@@ -31,9 +31,9 @@ CurrentSchedule.propTypes = {
 	currentTimestamp : React.PropTypes.number,
 };
 
-export default connect((state, props) => {
+export default connect( ( state, props ) => {
 	return {
 		schedule         : state.updates.schedule,
 		currentTimestamp : state.updates.status.timestamp,
 	};
-})(CurrentSchedule);
+} )( CurrentSchedule );

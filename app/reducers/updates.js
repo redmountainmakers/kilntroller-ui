@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-export function status(state = {}, action) {
-	switch (action.type) {
+export function status( state = {}, action ) {
+	switch ( action.type ) {
 		case 'STATUS_UPDATE_RECEIVE':
 			return action.status;
 	}
@@ -9,8 +9,8 @@ export function status(state = {}, action) {
 	return state;
 }
 
-export function schedule(state = {}, action) {
-	switch (action.type) {
+export function schedule( state = {}, action ) {
+	switch ( action.type ) {
 		case 'SCHEDULE_UPDATE_RECEIVE':
 			return action.schedule;
 	}
@@ -18,7 +18,7 @@ export function schedule(state = {}, action) {
 	return state;
 }
 
-export default combineReducers({
+export default combineReducers( {
 	status,
 	schedule,
-});
+} );

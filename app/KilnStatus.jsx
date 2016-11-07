@@ -11,8 +11,8 @@ import * as utils from './lib/utils';
 import './KilnStatus.scss';
 
 class KilnStatus extends React.Component {
-	constructor(props) {
-		super(props);
+	constructor( props ) {
+		super( props );
 		this._isFirstLoad = true;
 	}
 
@@ -22,42 +22,42 @@ class KilnStatus extends React.Component {
 
 		const { status } = this.props;
 
-		if (status && status.timestamp) {
-			function getTemperature(key, addDegrees = true) {
-				if (!Array.isArray(key)) {
-					key = ['computed', key];
+		if ( status && status.timestamp ) {
+			function getTemperature( key, addDegrees = true ) {
+				if ( ! Array.isArray( key ) ) {
+					key = [ 'computed', key ];
 				}
-				const value = get(status, key, 0);
-				if (value) {
-					return utils.round(value) + (addDegrees ? ' °C' : '');
+				const value = get( status, key, 0 );
+				if ( value ) {
+					return utils.round( value ) + ( addDegrees ? ' °C' : '' );
 				} else {
 					return false;
 				}
 			}
 
-			const date       = utils.date(status.timestamp);
-			const relaysOn   = Boolean(get(status, ['raw', 'R'], false));
-			const tempTarget = getTemperature(['setpoint']);
-			const tempActual = getTemperature('temperature');
-			const temp1      = getTemperature('T1', false);
-			const temp2      = getTemperature('T2', false);
-			const temp3      = getTemperature('T3', false);
+			const date       = utils.date( status.timestamp );
+			const relaysOn   = Boolean( get( status, [ 'raw', 'R' ], false ) );
+			const tempTarget = getTemperature( [ 'setpoint' ] );
+			const tempActual = getTemperature( 'temperature' );
+			const temp1      = getTemperature( 'T1', false );
+			const temp2      = getTemperature( 'T2', false );
+			const temp3      = getTemperature( 'T3', false );
 
 			let outdatedStatus = null;
 
-			const now = moment.utc(this.props.time);
-			const diff = now.diff(date, 'seconds');
-			if (diff > 10) {
-				if (diff < 45) {
+			const now = moment.utc( this.props.time );
+			const diff = now.diff( date, 'seconds' );
+			if ( diff > 10 ) {
+				if ( diff < 45 ) {
 					outdatedStatus = `Last updated: ${ diff } seconds ago`;
 				} else {
-					outdatedStatus = 'Last updated: ' + moment(date).from(now);
+					outdatedStatus = 'Last updated: ' + moment( date ).from( now );
 				}
 			}
 
 			const bodyClass   = outdatedStatus ? 'error' : 'status';
-			const relaysClass = (relaysOn ? 'on' : 'off');
-			const targetClass = (tempTarget ? 'set' : 'not-set');
+			const relaysClass = ( relaysOn ? 'on' : 'off' );
+			const targetClass = ( tempTarget ? 'set' : 'not-set' );
 
 			body = (
 				<SectionBody className={ bodyClass }>
@@ -90,10 +90,10 @@ class KilnStatus extends React.Component {
 				</SectionBody>
 			);
 			headerDate = (
-				<small>{ utils.timeFormatters.second(date) }</small>
+				<small>{ utils.timeFormatters.second( date ) }</small>
 			);
 
-		} else if (this._isFirstLoad) {
+		} else if ( this._isFirstLoad ) {
 			body = (
 				<SectionBody className="loading">
 					Loading kiln status...
@@ -128,9 +128,9 @@ KilnStatus.propTypes = {
 	status : React.PropTypes.object,
 };
 
-export default connect((state, props) => {
+export default connect( ( state, props ) => {
 	return {
 		time   : state.time,
 		status : state.updates.status,
 	};
-})(KilnStatus);
+} )( KilnStatus );

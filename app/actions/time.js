@@ -1,4 +1,4 @@
-export function sendTick(timestamp) {
+export function sendTick( timestamp ) {
 	return {
 		type : 'TICK',
 		timestamp,

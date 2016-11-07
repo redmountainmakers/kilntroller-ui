@@ -1,21 +1,21 @@
 import { combineReducers } from 'redux';
 
-export function status(state = null, action) {
-	switch (action.type) {
+export function status( state = null, action ) {
+	switch ( action.type ) {
 		case 'CONTROLLER_STATUS_RECEIVE':
 			return {
 				data      : action.data,
-				timestamp : +new Date,
+				timestamp : + new Date,
 			};
 
 		case 'CONTROLLER_STATUS_REQUEST_ERROR':
 			return {
 				data      : false,
-				timestamp : +new Date,
+				timestamp : + new Date,
 			};
 	}
 
-	if (state) {
+	if ( state ) {
 		return state;
 	} else {
 		return {
@@ -25,8 +25,8 @@ export function status(state = null, action) {
 	}
 }
 
-export function requesting(state = false, action) {
-	switch (action.type) {
+export function requesting( state = false, action ) {
+	switch ( action.type ) {
 		case 'CONTROLLER_STATUS_REQUEST':
 			return true;
 
@@ -40,8 +40,8 @@ export function requesting(state = false, action) {
 	return state;
 }
 
-export function clearingSchedule(state = false, action) {
-	switch (action.type) {
+export function clearingSchedule( state = false, action ) {
+	switch ( action.type ) {
 		case 'CONTROLLER_SCHEDULE_CLEAR':
 			return true;
 
@@ -55,13 +55,13 @@ export function clearingSchedule(state = false, action) {
 	return state;
 }
 
-export function clearScheduleError(state = null, action) {
-	switch (action.type) {
+export function clearScheduleError( state = null, action ) {
+	switch ( action.type ) {
 		case 'SCHEDULE_UPDATE_RECEIVE':
 			if (
-				!action.schedule ||
-				!action.schedule.steps ||
-				!action.schedule.steps.current
+				! action.schedule ||
+				! action.schedule.steps ||
+				! action.schedule.steps.current
 			) {
 				return null;
 			}
@@ -80,9 +80,9 @@ export function clearScheduleError(state = null, action) {
 	return state;
 }
 
-export default combineReducers({
+export default combineReducers( {
 	status,
 	requesting,
 	clearingSchedule,
 	clearScheduleError,
-});
+} );

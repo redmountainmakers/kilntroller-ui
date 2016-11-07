@@ -3,8 +3,8 @@ import classNames from 'classnames';
 
 import './SectionBody.scss';
 
-export default function SectionBody({ className, children }) {
-	const classes = classNames('SectionBody', className);
+export default function SectionBody( { className, children } ) {
+	const classes = classNames( 'SectionBody', className );
 	return (
 		<div className={ classes }>
 			{ children }

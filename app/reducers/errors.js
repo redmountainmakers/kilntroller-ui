@@ -1,5 +1,5 @@
-export default function(state = {}, action) {
-	switch (action.type) {
+export default function( state = {}, action ) {
+	switch ( action.type ) {
 		case 'DATA_REQUEST_ERROR':
 			return {
 				...state,

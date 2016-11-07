@@ -4,7 +4,7 @@ import Gridicon from '../vendor/gridicon';
 
 import './SectionHeader.scss';
 
-export default function SectionHeader({ icon, children }) {
+export default function SectionHeader( { icon, children } ) {
 	return (
 		<h1 className="SectionHeader">
 			{ icon && (

@@ -9,8 +9,8 @@ import {
 
 import './ControllerStatus.scss';
 
-function ControllerStatus({ requesting, isConnected, error }) {
-	if (requesting) {
+function ControllerStatus( { requesting, isConnected, error } ) {
+	if ( requesting ) {
 		return (
 			<SectionBody className="ControllerStatus loading">
 				<Gridicon icon="plugins" size={ 24 } />
@@ -21,7 +21,7 @@ function ControllerStatus({ requesting, isConnected, error }) {
 		);
 	}
 
-	if (isConnected) {
+	if ( isConnected ) {
 		return (
 			<SectionBody className="ControllerStatus success">
 				<Gridicon icon="plugins" size={ 24 } />
@@ -33,11 +33,11 @@ function ControllerStatus({ requesting, isConnected, error }) {
 	}
 
 	let errorText = 'Read-only mode: Cannot connect to controller';
-	if (error && error !== 'Unknown error') {
+	if ( error && error !== 'Unknown error' ) {
 		errorText += `: ${ error }`;
 	}
 
-	if (error) {
+	if ( error ) {
 		return (
 			<SectionBody className="ControllerStatus error">
 				<Gridicon icon="plugins" size={ 24 } />
@@ -54,7 +54,7 @@ function ControllerStatus({ requesting, isConnected, error }) {
 		);
 	}
 
-	throw new Error('Should never get here');
+	throw new Error( 'Should never get here' );
 }
 
 ControllerStatus.propTypes = {
@@ -64,9 +64,9 @@ ControllerStatus.propTypes = {
 };
 
 export default connect(
-	(state, props) => {
+	( state, props ) => {
 		const requesting  = state.controller.requesting;
-		const isConnected = isControllerConnected(state);
+		const isConnected = isControllerConnected( state );
 		const error       = state.errors.controllerStatus;
 
 		return {
@@ -75,4 +75,4 @@ export default connect(
 			error,
 		};
 	}
-)(ControllerStatus);
+)( ControllerStatus );

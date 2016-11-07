@@ -14,7 +14,7 @@ class EditSchedule extends React.Component {
 EditSchedule.propTypes = {
 };
 
-export default connect((state, props) => {
+export default connect( ( state, props ) => {
 	return {
 	};
-})(EditSchedule);
+} )( EditSchedule );

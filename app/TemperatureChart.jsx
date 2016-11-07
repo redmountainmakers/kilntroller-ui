@@ -15,20 +15,20 @@ import {
 
 import './TemperatureChart.scss';
 
-const debug = debugModule('TemperatureChart');
+const debug = debugModule( 'TemperatureChart' );
 
 class TemperatureChart extends React.Component {
-	constructor(props) {
-		super(props);
+	constructor( props ) {
+		super( props );
 
-		this.formatTooltip = this.formatTooltip.bind(this);
+		this.formatTooltip = this.formatTooltip.bind( this );
 		this.state = {
 			windowWidth : window.innerWidth,
 		};
-		this._resize = debounce(this._resize.bind(this), 500);
+		this._resize = debounce( this._resize.bind( this ), 500 );
 	}
 
-	shouldComponentUpdate(nextProps, nextState) {
+	shouldComponentUpdate( nextProps, nextState ) {
 		const { data, min, max, loading, readError } = this.props;
 		const { windowWidth } = this.state;
 		return (
@@ -36,18 +36,18 @@ class TemperatureChart extends React.Component {
 			max !== nextProps.max ||
 			loading !== nextProps.loading ||
 			readError !== nextProps.readError ||
-			get(data, 'length', 0) !== get(nextProps.data, 'length', 0) ||
+			get( data, 'length', 0 ) !== get( nextProps.data, 'length', 0 ) ||
 			windowWidth !== nextState.windowWidth
 		);
 	}
 
 	componentWillMount() {
 		this._isFirstLoad = true;
-		window.addEventListener('resize', this._resize);
+		window.addEventListener( 'resize', this._resize );
 	}
 
 	componentWillUnmount() {
-		window.removeEventListener('resize', this._resize);
+		window.removeEventListener( 'resize', this._resize );
 	}
 
 	getFormattedData() {
@@ -57,34 +57,34 @@ class TemperatureChart extends React.Component {
 		const actual = { name : 'Actual', values : [], _missing : 0 };
 		const target = { name : 'Target', values : [], _missing : 0 };
 
-		if (data && data.length) {
-			debug('getFormattedData length=%d', data.length);
-			data.forEach(value => {
-				const x = utils.date(value.timestamp);
-				if (typeof value.temperature === 'number') {
+		if ( data && data.length ) {
+			debug( 'getFormattedData length=%d', data.length );
+			data.forEach( value => {
+				const x = utils.date( value.timestamp );
+				if ( typeof value.temperature === 'number' ) {
 					actual._missing = 0;
-					actual.values.push({ x, y : value.temperature });
-				} else if (++actual._missing === 5) {
-					actual.values.push({ x, y : null });
+					actual.values.push( { x, y : value.temperature } );
+				} else if ( ++ actual._missing === 5 ) {
+					actual.values.push( { x, y : null } );
 				}
-				if (typeof value.setpoint === 'number') {
+				if ( typeof value.setpoint === 'number' ) {
 					target._missing = 0;
-					target.values.push({ x, y : value.setpoint });
-				} else if (++target._missing === 5) {
-					target.values.push({ x, y : null });
+					target.values.push( { x, y : value.setpoint } );
+				} else if ( ++ target._missing === 5 ) {
+					target.values.push( { x, y : null } );
 				}
-			});
+			} );
 		} else {
 			// LineChart needs at least 1 data value?
-			const x = utils.date(min);
+			const x = utils.date( min );
 			const y = 0;
-			actual.values.push({ x, y });
-			target.values.push({ x, y });
+			actual.values.push( { x, y } );
+			target.values.push( { x, y } );
 		}
 
-		const allSeries = [omit(actual, '_missing'), omit(target, '_missing')];
+		const allSeries = [ omit( actual, '_missing' ), omit( target, '_missing' ) ];
 
-		if (scheduleObj && scheduleObj.steps && scheduleObj.steps.current) {
+		if ( scheduleObj && scheduleObj.steps && scheduleObj.steps.current ) {
 			const schedule = { name : 'Scheduled', values : [] };
 
 			const { previous, current, future } = scheduleObj.steps;
@@ -92,29 +92,29 @@ class TemperatureChart extends React.Component {
 				0,
 				currentTimestamp - scheduleObj.stepStartedAt
 			) / 60 / 1000;
-			if (runningForMinutes < current.rampMinutes) {
+			if ( runningForMinutes < current.rampMinutes ) {
 				// Partway through the ramp phase; interpolate
-				const previousTemperature = previous[previous.length - 1].temperature;
-				schedule.values.push({
-					x : utils.date(currentTimestamp),
+				const previousTemperature = previous[ previous.length - 1 ].temperature;
+				schedule.values.push( {
+					x : utils.date( currentTimestamp ),
 					y : (
 						previousTemperature +
-						(current.temperature - previousTemperature) *
-						(runningForMinutes / current.rampMinutes)
+						( current.temperature - previousTemperature ) *
+						( runningForMinutes / current.rampMinutes )
 					),
-				});
-				schedule.values.push({
+				} );
+				schedule.values.push( {
 					x : utils.date(
 						scheduleObj.stepStartedAt +
 						current.rampMinutes * 60 * 1000
 					),
 					y : current.temperature,
-				});
+				} );
 			} else {
-				schedule.values.push({
-					x : utils.date(currentTimestamp),
+				schedule.values.push( {
+					x : utils.date( currentTimestamp ),
 					y : current.temperature,
-				});
+				} );
 			}
 
 			let stepEndsAt = (
@@ -122,25 +122,25 @@ class TemperatureChart extends React.Component {
 				current.rampMinutes * 60 * 1000 +
 				current.soakMinutes * 60 * 1000
 			);
-			schedule.values.push({
-				x : utils.date(stepEndsAt),
+			schedule.values.push( {
+				x : utils.date( stepEndsAt ),
 				y : current.temperature,
-			});
+			} );
 
-			(future || []).forEach(step => {
+			( future || [] ).forEach( step => {
 				stepEndsAt += step.rampMinutes * 60 * 1000;
-				schedule.values.push({
-					x : utils.date(stepEndsAt),
+				schedule.values.push( {
+					x : utils.date( stepEndsAt ),
 					y : step.temperature,
-				});
+				} );
 				stepEndsAt += step.soakMinutes * 60 * 1000;
-				schedule.values.push({
-					x : utils.date(stepEndsAt),
+				schedule.values.push( {
+					x : utils.date( stepEndsAt ),
 					y : step.temperature,
-				});
-			});
+				} );
+			} );
 
-			allSeries.push(schedule);
+			allSeries.push( schedule );
 		}
 
 		return allSeries;
@@ -151,73 +151,73 @@ class TemperatureChart extends React.Component {
 		let { max } = this.props;
 
 		let temperatureRange;
-		if (data && data.length) {
+		if ( data && data.length ) {
 			// TODO we're not handling the case where schedule is set but data
 			// isn't.  This should be impossible anyway?
-			temperatureRange = extent(data, point => point.temperature);
+			temperatureRange = extent( data, point => point.temperature );
 		} else {
-			temperatureRange = [Infinity, -Infinity];
+			temperatureRange = [ Infinity, - Infinity ];
 		}
 
-		if (schedule && schedule.steps && schedule.steps.current) {
+		if ( schedule && schedule.steps && schedule.steps.current ) {
 			max = schedule.stepStartedAt;
 			const { current, future } = schedule.steps;
-			[current].concat(future || []).forEach(step => {
-				temperatureRange[0] = Math.min(temperatureRange[0], step.temperature);
-				temperatureRange[1] = Math.max(temperatureRange[1], step.temperature);
+			[ current ].concat( future || [] ).forEach( step => {
+				temperatureRange[ 0 ] = Math.min( temperatureRange[ 0 ], step.temperature );
+				temperatureRange[ 1 ] = Math.max( temperatureRange[ 1 ], step.temperature );
 				max += step.rampMinutes * 60 * 1000;
 				max += step.soakMinutes * 60 * 1000;
-			});
+			} );
 		}
 
 		return {
 			x : [
-				utils.date(min),
-				utils.date(max),
+				utils.date( min ),
+				utils.date( max ),
 			],
 			y : [
-				Math.min(temperatureRange[0], 0),
-				Math.max(temperatureRange[1] * 1.4, 100),
+				Math.min( temperatureRange[ 0 ], 0 ),
+				Math.max( temperatureRange[ 1 ] * 1.4, 100 ),
 			],
 		};
 	}
 
-	formatTooltip(d) {
+	formatTooltip( d ) {
 		return [
-			utils.timeFormatters.second(d.xValue),
-			d.seriesName + ': ' + String(d.yValue),
-		].join('<br />');
+			utils.timeFormatters.second( d.xValue ),
+			d.seriesName + ': ' + String( d.yValue ),
+		].join( '<br />' );
 	}
 
 	render() {
 		const { data, readError } = this.props;
-		const hasData = Boolean(data && data.length);
+		const hasData = Boolean( data && data.length );
 
-		if (hasData) {
+		if ( hasData ) {
 			this._isFirstLoad = false;
 		}
 
 		const loading = this.props.loading && this._isFirstLoad;
 		const circleRadius = {
 			inactive : 0,
-			active   : (hasData ? 4 : 0),
+			active   : ( hasData ? 4 : 0 ),
 		};
 
 		let status = null;
-		if (readError) {
+		if ( readError ) {
 			status = (
 				<div className="status">
 					Error fetching data from API:<br />
 					{ readError }
 				</div>
 			);
-		} else if (loading) {
+		} else if ( loading ) {
 			status = (
 				<div className="status">
 					Loading chart data...
 				</div>
 			);
-		} else if (!hasData) {
+		} else if ( ! hasData ) {
 			status = (
 				<div className="status">
 					No data for selected time period
@@ -230,7 +230,7 @@ class TemperatureChart extends React.Component {
 		const tickCount = Math.max(
 			2,
 			Math.min(
-				Math.floor(windowWidth / pixelsPerTickLabel) - 3,
+				Math.floor( windowWidth / pixelsPerTickLabel ) - 3,
 				10
 			)
 		);
@@ -243,7 +243,7 @@ class TemperatureChart extends React.Component {
 				<LineChart
 					legend
 					data={ this.getFormattedData() }
-					colors={ scaleOrdinal(schemeCategory10) }
+					colors={ scaleOrdinal( schemeCategory10 ) }
 					xAxisFormatter={ utils.timeFormatters.minute }
 					xAxisTickCount={ tickCount }
 					domain={ this.getDomain() }
@@ -258,9 +258,9 @@ class TemperatureChart extends React.Component {
 	}
 
 	_resize() {
-		this.setState({
+		this.setState( {
 			windowWidth : window.innerWidth,
-		});
+		} );
 	}
 }
 
@@ -274,10 +274,10 @@ TemperatureChart.propTypes = {
 	readError        : React.PropTypes.string,
 };
 
-export default connect((state, props) => {
+export default connect( ( state, props ) => {
 	const range     = state.chart.range;
-	const loading   = isRequestingChartData(state);
-	const data      = getChartData(state);
+	const loading   = isRequestingChartData( state );
+	const data      = getChartData( state );
 	const readError = state.errors.dataRequest;
 
 	return {
@@ -289,4 +289,4 @@ export default connect((state, props) => {
 		data,
 		readError,
 	};
-})(TemperatureChart);
+} )( TemperatureChart );

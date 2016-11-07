@@ -15,49 +15,49 @@ import {
 import { apiUpdatePath } from './lib/api';
 import { UpdateNormalizer } from './lib/utils';
 
-const debug = debugModule('QueryStatusUpdates');
+const debug = debugModule( 'QueryStatusUpdates' );
 
 class QueryStatusUpdates extends React.Component {
 	componentDidMount() {
-		this._updates = new UpdateNormalizer(1000, u => u.timestamp);
+		this._updates = new UpdateNormalizer( 1000, u => u.timestamp );
 		this._updateInterval = setCorrectingInterval(
-			this._sendQueuedUpdates.bind(this),
+			this._sendQueuedUpdates.bind( this ),
 			1000
 		);
-		this._sock = new SockJS(apiUpdatePath);
+		this._sock = new SockJS( apiUpdatePath );
 		this._sock.onmessage = e => {
 			try {
-				const update = JSON.parse(e.data);
-				debug('receive', update);
-				switch (update && update.type) {
+				const update = JSON.parse( e.data );
+				debug( 'receive', update );
+				switch ( update && update.type ) {
 					case 'schedule':
-						this.props.receiveUpdate(update);
+						this.props.receiveUpdate( update );
 						break;
 					case 'update':
-						this._updates.queue(update);
+						this._updates.queue( update );
 						break;
 				}
-			} catch (err) {}
+			} catch ( err ) {}
 		};
 
 		this.props.requestKilnStatus();
 	}
 
 	componentWillUnmount() {
-		clearCorrectingInterval(this._updateInterval);
+		clearCorrectingInterval( this._updateInterval );
 		this._sock.close();
 		this._sock = null;
 	}
 
 	_sendQueuedUpdates() {
 		const updates = this._updates.getCurrentUpdates();
-		if (updates.length) {
+		if ( updates.length ) {
 			const condensedUpdates = {};
-			updates.forEach(u => {
-				debug('send', +new Date, u);
-				condensedUpdates[u.type] = u;
-			});
-			forOwn(condensedUpdates, u => this.props.receiveUpdate(u));
+			updates.forEach( u => {
+				debug( 'send', + new Date, u );
+				condensedUpdates[ u.type ] = u;
+			} );
+			forOwn( condensedUpdates, u => this.props.receiveUpdate( u ) );
 		}
 	}
 
@@ -77,4 +77,4 @@ export default connect(
 		requestKilnStatus,
 		receiveUpdate,
 	}
-)(QueryStatusUpdates);
+)( QueryStatusUpdates );

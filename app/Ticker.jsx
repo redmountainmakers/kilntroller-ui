@@ -13,17 +13,17 @@ class Ticker extends React.Component {
 	}
 
 	schedule() {
-		const now = +new Date;
-		const then = 1000 + now - (now % 1000);
-		this._timeout = setTimeout(() => {
-			this.props.sendTick(then);
+		const now = + new Date;
+		const then = 1000 + now - ( now % 1000 );
+		this._timeout = setTimeout( () => {
+			this.props.sendTick( then );
 			this.schedule();
-		}, then - now);
+		}, then - now );
 	}
 
 	clear() {
-		if (this._timeout) {
-			clearTimeout(this._timeout);
+		if ( this._timeout ) {
+			clearTimeout( this._timeout );
 			this._timeout = null;
 		}
 	}
@@ -40,4 +40,4 @@ Ticker.propTypes = {
 export default connect(
 	null,
 	{ sendTick }
-)(Ticker);
+)( Ticker );

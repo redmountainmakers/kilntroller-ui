@@ -9,26 +9,26 @@ import {
 import './ClearCurrentSchedule.scss';
 
 class ClearCurrentSchedule extends React.Component {
-	constructor(props) {
-		super(props);
+	constructor( props ) {
+		super( props );
 		this.state = { confirmClear : false };
-		this._boundConfirmClear    = this._confirmClear.bind(this);
-		this._boundCancelClear     = this._cancelClear.bind(this);
-		this._boundPromptToConfirm = this._promptToConfirm.bind(this);
-		this._boundDismissError    = this._dismissError.bind(this);
+		this._boundConfirmClear    = this._confirmClear.bind( this );
+		this._boundCancelClear     = this._cancelClear.bind( this );
+		this._boundPromptToConfirm = this._promptToConfirm.bind( this );
+		this._boundDismissError    = this._dismissError.bind( this );
 	}
 
 	_confirmClear() {
 		this.props.clearControllerSchedule();
-		this.setState({ confirmClear : false });
+		this.setState( { confirmClear : false } );
 	}
 
 	_cancelClear() {
-		this.setState({ confirmClear : false });
+		this.setState( { confirmClear : false } );
 	}
 
 	_promptToConfirm() {
-		this.setState({ confirmClear : true });
+		this.setState( { confirmClear : true } );
 	}
 
 	_dismissError() {
@@ -36,7 +36,7 @@ class ClearCurrentSchedule extends React.Component {
 	}
 
 	render() {
-		if (this.props.clearScheduleError) {
+		if ( this.props.clearScheduleError ) {
 			return (
 				<div className="ClearCurrentSchedule error">
 					Error clearing schedule: { this.props.clearScheduleError }
@@ -48,13 +48,13 @@ class ClearCurrentSchedule extends React.Component {
 					</button>
 				</div>
 			);
-		} else if (this.props.isClearingSchedule) {
+		} else if ( this.props.isClearingSchedule ) {
 			return (
 				<div className="ClearCurrentSchedule loading">
 					Clearing schedule...
 				</div>
 			);
-		} else if (this.state.confirmClear) {
+		} else if ( this.state.confirmClear ) {
 			return (
 				<div className="ClearCurrentSchedule confirm">
 					<div className="confirm-text">
@@ -96,7 +96,7 @@ ClearCurrentSchedule.propTypes = {
 	dismissClearControllerScheduleError : React.PropTypes.func,
 };
 
-export default connect((state, props) => {
+export default connect( ( state, props ) => {
 	return {
 		isClearingSchedule : state.controller.clearingSchedule,
 		clearScheduleError : state.controller.clearScheduleError,
@@ -104,4 +104,4 @@ export default connect((state, props) => {
 }, {
 	clearControllerSchedule,
 	dismissClearControllerScheduleError,
-})(ClearCurrentSchedule);
+} )( ClearCurrentSchedule );
