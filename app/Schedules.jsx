@@ -9,8 +9,6 @@ import {
 	isControllerConnected,
 } from './selectors/controller';
 
-// import './Schedules.scss';
-
 class Schedules extends React.Component {
 	render() {
 		if ( ! this.props.isConnected ) {
