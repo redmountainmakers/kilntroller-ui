@@ -2,15 +2,13 @@
 
 Webpack + React + Babel
 
-### Installation
+### Development Setup
 
 ```sh
 git clone https://github.com/redmountainmakers/kilntroller-ui
 cd kilntroller-ui
 npm install
 ```
-
-### Development
 
 Requires Node.js v6 or greater.
 
@@ -29,3 +27,15 @@ If you need to, you can create a config file `local.json` with any or all of
 the following settings:
 
 - `port` - port for development server (default 3000)
+
+### Deployment
+
+You will need a SSH account on the `redmountainmakers.org` web server.  This
+account must be a member of the `webadmin` group.
+
+Run these commands:
+
+```sh
+make build
+scp dist/* yourusername@redmountainmakers.org:/www/kiln/
+```

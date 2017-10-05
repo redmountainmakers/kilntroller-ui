@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { extent } from 'd3-array';
-import { scaleOrdinal, schemeCategory10 } from 'd3-scale';
+import { scaleOrdinal, schemeCategory10, scaleLinear } from 'd3-scale';
 import { debounce, get, omit } from 'lodash';
 import debugModule from 'debug';
 
@@ -22,32 +22,34 @@ class TemperatureChart extends React.Component {
 		super( props );
 
 		this.formatTooltip = this.formatTooltip.bind( this );
-		this.state = {
-			windowWidth : window.innerWidth,
-		};
-		this._resize = debounce( this._resize.bind( this ), 500 );
+		this.getResizeState = this.getResizeState.bind( this );
+		this.resize = this.resize.bind( this );
+
+		this.debouncedResize = debounce( this.resize, 250 );
+
+		this.state = this.getResizeState();
 	}
 
 	shouldComponentUpdate( nextProps, nextState ) {
 		const { data, min, max, loading, readError } = this.props;
-		const { windowWidth } = this.state;
+		const { chartWidth } = this.state;
 		return (
 			min !== nextProps.min ||
 			max !== nextProps.max ||
 			loading !== nextProps.loading ||
 			readError !== nextProps.readError ||
 			get( data, 'length', 0 ) !== get( nextProps.data, 'length', 0 ) ||
-			windowWidth !== nextState.windowWidth
+			chartWidth !== nextState.chartWidth
 		);
 	}
 
 	componentWillMount() {
 		this._isFirstLoad = true;
-		window.addEventListener( 'resize', this._resize );
+		window.addEventListener( 'resize', this.debouncedResize );
 	}
 
 	componentWillUnmount() {
-		window.removeEventListener( 'resize', this._resize );
+		window.removeEventListener( 'resize', this.debouncedResize );
 	}
 
 	getFormattedData() {
@@ -189,6 +191,18 @@ class TemperatureChart extends React.Component {
 		].join( '<br />' );
 	}
 
+	getChartHeight( chartWidth ) {
+		// Default chart height is 200px; this is too small, especially on
+		// desktop devices.  Vary height based on the chart width instead.
+
+		const scale = scaleLinear() // map input to output values
+			.domain( [ 480, 960 ] ) // input : window width limits
+			.range( [ 200, 500 ] )  // output: chart height limits
+			.clamp( true );         // no output values outside of range
+			                        // (return limits instead)
+		return scale( chartWidth );
+	}
+
 	render() {
 		const { data, readError } = this.props;
 		const hasData = Boolean( data && data.length );
@@ -225,12 +239,12 @@ class TemperatureChart extends React.Component {
 			);
 		}
 
-		const { windowWidth } = this.state;
+		const { chartWidth } = this.state;
 		const pixelsPerTickLabel = 115;
 		const tickCount = Math.max(
 			2,
 			Math.min(
-				Math.floor( windowWidth / pixelsPerTickLabel ) - 3,
+				Math.floor( chartWidth / pixelsPerTickLabel ) - 3,
 				10
 			)
 		);
@@ -248,7 +262,8 @@ class TemperatureChart extends React.Component {
 					xAxisTickCount={ tickCount }
 					domain={ this.getDomain() }
 					tooltipFormat={ this.formatTooltip }
-					width={ windowWidth }
+					width={ chartWidth }
+					height={ this.getChartHeight( chartWidth ) }
 					circleRadius={ circleRadius }
 					showTooltip={ hasData }
 				/>
@@ -257,10 +272,14 @@ class TemperatureChart extends React.Component {
 		);
 	}
 
-	_resize() {
-		this.setState( {
-			windowWidth : window.innerWidth,
-		} );
+	getResizeState() {
+		return {
+			chartWidth : window.innerWidth - 20,
+		};
+	}
+
+	resize() {
+		this.setState( this.getResizeState() );
 	}
 }
 
