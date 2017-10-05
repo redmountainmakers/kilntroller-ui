@@ -25,7 +25,7 @@ class TemperatureChart extends React.Component {
 		this.getResizeState = this.getResizeState.bind( this );
 		this.resize = this.resize.bind( this );
 
-		this.debouncedResize = debounce( this.resize, 500 );
+		this.debouncedResize = debounce( this.resize, 250 );
 
 		this.state = this.getResizeState();
 	}
