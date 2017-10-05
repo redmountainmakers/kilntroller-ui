@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { extent } from 'd3-array';
-import { scaleOrdinal, schemeCategory10 } from 'd3-scale';
+import { scaleOrdinal, schemeCategory10, scaleLinear } from 'd3-scale';
 import { debounce, get, omit } from 'lodash';
 import debugModule from 'debug';
 
@@ -189,6 +189,18 @@ class TemperatureChart extends React.Component {
 		].join( '<br />' );
 	}
 
+	getChartHeight( windowWidth ) {
+		// Default chart height is 200px; this is too small, especially on
+		// desktop devices.  Vary height based on the window width instead.
+
+		const scale = scaleLinear() // map input to output values
+			.domain( [ 480, 960 ] ) // input : window width limits
+			.range( [ 200, 500 ] )  // output: chart height limits
+			.clamp( true );         // no output values outside of range
+			                        // (return limits instead)
+		return scale( windowWidth );
+	}
+
 	render() {
 		const { data, readError } = this.props;
 		const hasData = Boolean( data && data.length );
@@ -249,7 +261,7 @@ class TemperatureChart extends React.Component {
 					domain={ this.getDomain() }
 					tooltipFormat={ this.formatTooltip }
 					width={ windowWidth }
-					height={ 500 }
+					height={ this.getChartHeight( windowWidth ) }
 					circleRadius={ circleRadius }
 					showTooltip={ hasData }
 				/>
