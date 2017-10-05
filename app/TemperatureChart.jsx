@@ -249,6 +249,7 @@ class TemperatureChart extends React.Component {
 					domain={ this.getDomain() }
 					tooltipFormat={ this.formatTooltip }
 					width={ windowWidth }
+					height={ 500 }
 					circleRadius={ circleRadius }
 					showTooltip={ hasData }
 				/>
