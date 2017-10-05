@@ -4,6 +4,7 @@ import { extent } from 'd3-array';
 import { scaleOrdinal, schemeCategory10, scaleLinear } from 'd3-scale';
 import { debounce, get, omit } from 'lodash';
 import debugModule from 'debug';
+import ResizeObserver from 'resize-observer-polyfill';
 
 import { LineChart } from '../vendor/rd3/src';
 import SectionHeader from './SectionHeader';
@@ -23,31 +24,52 @@ class TemperatureChart extends React.Component {
 
 		this.formatTooltip = this.formatTooltip.bind( this );
 		this.state = {
-			windowWidth : window.innerWidth,
+			chartWidth : document.documentElement.clientWidth - 1,
 		};
-		this._resize = debounce( this._resize.bind( this ), 500 );
+		this._resize = this._resize.bind( this );
+		this._resizeDebounced = debounce( this._resize, 100, {
+			leading  : true,
+			trailing : true,
+		} );
 	}
 
 	shouldComponentUpdate( nextProps, nextState ) {
 		const { data, min, max, loading, readError } = this.props;
-		const { windowWidth } = this.state;
+		const { chartWidth } = this.state;
 		return (
 			min !== nextProps.min ||
 			max !== nextProps.max ||
 			loading !== nextProps.loading ||
 			readError !== nextProps.readError ||
 			get( data, 'length', 0 ) !== get( nextProps.data, 'length', 0 ) ||
-			windowWidth !== nextState.windowWidth
+			chartWidth !== nextState.chartWidth
 		);
 	}
 
 	componentWillMount() {
 		this._isFirstLoad = true;
-		window.addEventListener( 'resize', this._resize );
+		window.addEventListener( 'resize', this._resizeDebounced );
+		// This is necessary because rendering a resized chart can cause a
+		// vertical scrollbar to appear or disappear, which changes the window
+		// width, which may cause a horizontal scrollbar to appear.  However,
+		// the appearance of a vertical scrollbar does not trigger a window
+		// 'resize' event, so we need to listen for this kind of resize too.
+		this.resizeObserver = new ResizeObserver( ( entries, observer ) => {
+			for ( const entry of entries ) {
+				if ( entry.target === document.body ) {
+					this._resizeDebounced();
+					return;
+				}
+			}
+		} );
+		this.resizeObserver.observe( document.body );
 	}
 
 	componentWillUnmount() {
-		window.removeEventListener( 'resize', this._resize );
+		this._resizeDebounced.cancel();
+		window.removeEventListener( 'resize', this._resizeDebounced );
+		this.resizeObserver.disconnect();
+		delete this.resizeObserver;
 	}
 
 	getFormattedData() {
@@ -189,16 +211,16 @@ class TemperatureChart extends React.Component {
 		].join( '<br />' );
 	}
 
-	getChartHeight( windowWidth ) {
+	getChartHeight( chartWidth ) {
 		// Default chart height is 200px; this is too small, especially on
-		// desktop devices.  Vary height based on the window width instead.
+		// desktop devices.  Vary height based on the chart width instead.
 
 		const scale = scaleLinear() // map input to output values
 			.domain( [ 480, 960 ] ) // input : window width limits
 			.range( [ 200, 500 ] )  // output: chart height limits
 			.clamp( true );         // no output values outside of range
 			                        // (return limits instead)
-		return scale( windowWidth );
+		return scale( chartWidth );
 	}
 
 	render() {
@@ -237,12 +259,12 @@ class TemperatureChart extends React.Component {
 			);
 		}
 
-		const { windowWidth } = this.state;
+		const { chartWidth } = this.state;
 		const pixelsPerTickLabel = 115;
 		const tickCount = Math.max(
 			2,
 			Math.min(
-				Math.floor( windowWidth / pixelsPerTickLabel ) - 3,
+				Math.floor( chartWidth / pixelsPerTickLabel ) - 3,
 				10
 			)
 		);
@@ -260,8 +282,8 @@ class TemperatureChart extends React.Component {
 					xAxisTickCount={ tickCount }
 					domain={ this.getDomain() }
 					tooltipFormat={ this.formatTooltip }
-					width={ windowWidth }
-					height={ this.getChartHeight( windowWidth ) }
+					width={ chartWidth }
+					height={ this.getChartHeight( chartWidth ) }
 					circleRadius={ circleRadius }
 					showTooltip={ hasData }
 				/>
@@ -272,7 +294,7 @@ class TemperatureChart extends React.Component {
 
 	_resize() {
 		this.setState( {
-			windowWidth : window.innerWidth,
+			chartWidth : document.documentElement.clientWidth - 1,
 		} );
 	}
 }
