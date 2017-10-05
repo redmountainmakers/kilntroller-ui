@@ -133,7 +133,7 @@ module.exports = {
 			],
 			allowSamePrecedence : true,
 		} ],
-		'no-mixed-spaces-and-tabs'      : 'error',
+		'no-mixed-spaces-and-tabs'      : [ 'error', 'smart-tabs' ],
 		'no-nested-ternary'             : 'error',
 		'no-new-object'                 : 'error',
 		'no-spaced-func'                : 'error',
