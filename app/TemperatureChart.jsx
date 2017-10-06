@@ -96,7 +96,11 @@ class TemperatureChart extends React.Component {
 			) / 60 / 1000;
 			if ( runningForMinutes < current.rampMinutes ) {
 				// Partway through the ramp phase; interpolate
-				const previousTemperature = previous[ previous.length - 1 ].temperature;
+				const previousTemperature = (
+					previous.length
+						? previous[ previous.length - 1 ].temperature
+						: 20 // TODO Get min temperature from somewhere else :(
+				);
 				schedule.values.push( {
 					x : utils.date( currentTimestamp ),
 					y : (
