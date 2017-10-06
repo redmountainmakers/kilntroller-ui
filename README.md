@@ -15,10 +15,11 @@ Requires Node.js v6 or greater.
 Requires GNU `make` or equivalent (if on Debian, try
 `sudo apt-get install build-essential`).
 
-Use `make run` to start
+To develop the code on your computer, use `make run`.  This will start
 [webpack-dev-server](https://webpack.github.io/docs/webpack-dev-server.html)
 with live editing support via
 [react-hot-loader](https://github.com/gaearon/react-hot-loader).
+(If you're using Windows, try `node server.js` instead).
 
 Use `make lint` to check coding style, and `make lint-fix` to automatically fix
 many issues.
